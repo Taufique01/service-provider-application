@@ -51,8 +51,6 @@ function updateZillowView(){
     $("#table-city").html(zillow.address.city);
     $("#table-state").html(zillow.address.state);
     $("#table-zip").html(zillow.address.zipcode);
-    $("#table-lat").html(zillow.address.latitude);
-    $("#table-long").html(zillow.address.longitude);
 
     $("#a-home-details").attr("href",zillow.links.home_details);
     $("#iframe-home-details").attr("src",zillow.links.home_details);
@@ -69,15 +67,7 @@ function updateZillowView(){
     $(".table-val-high").html(getValidValue(zillow.zestimate.valuation_high));
     $(".table-percen").html(getValidValue(zillow.zestimate.percentile));
      
-    ///id for rent zestimate
-    $("#table-zestimate").html(getValidValue(zillow.rent_zestimate.zestimate));
-    $("#table-updated").html(getValidValue(zillow.rent_zestimate.last_updated));
-    $("#table-val-change").html(getValidValue(zillow.rent_zestimate.value_change));
-    $("#table-val-low").html(getValidValue(zillow.rent_zestimate.valuation_low));
-    $("#table-val-high").html(getValidValue(zillow.rent_zestimate.valuation_high));
-    $("#table-percen").html(getValidValue(zillow.rent_zestimate.percentile));
-     
-
+  
 
 
 
