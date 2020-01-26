@@ -19,6 +19,9 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
+   
+
+    </style>
 </head>
 
 <body class="nav-md">
@@ -181,7 +184,7 @@
                     <div class="col-md-6 ">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h1>Zillow Search Result <i style="color: green;display: none" class="fa fa-spinner fa-spin fa-spin-zlw"></i><i style="color: green;display: none" class="fa fa-check fa-check-zlw"></i><i style="color: red;display: none" class="fa fa-close fa-close-zlw"></i></h1>
+                                <h1><img  src="{% static '/images/search_logo/zillow.png' %}" alt="Zillow Search"> <i style="color: green;display: none" class="fa fa-spinner fa-spin fa-spin-zlw"></i><i style="color: green;display: none" class="fa fa-check fa-check-zlw"></i><i style="color: red;display: none" class="fa fa-close fa-close-zlw"></i></h1>
 
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li class="fa-hover"><i id="z-previous" class="fa    fa-chevron-left">&nbsp;&nbsp;&nbsp;</i>
@@ -296,13 +299,13 @@
                         <div class="x_panel">
 
                             <div class="x_title">
-                                <h1>Weather Report <i style="color: green;display: none" class="fa fa-spinner fa-spin fa-spin-ds"></i><i style="color: green;display: none" class="fa fa-check fa-check-ds"></i><i style="color: red;display: none" class="fa fa-close fa-close-ds"></i></h1>
+                                <h1><img style="margin-left:5px;margin-right:10px;width:200px" src="{% static '/images/search_logo/darksky.png' %}" alt="DarkSky Search"><i style="color: green;display: none" class="fa fa-spinner fa-spin fa-spin-ds"></i><i style="color: green;display: none" class="fa fa-check fa-check-ds"></i><i style="color: red;display: none" class="fa fa-close fa-close-ds"></i></h1>
 
                                 <div class="clearfix"></div>
                             </div>
 
                             <div class="x_content">
-                                <h2 id="icon">Weather??</h2>
+                                <h2 id="icon">Weather</h2>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
@@ -392,8 +395,11 @@
         <!-- footer content -->
         <footer>
             <div class="pull-right">
+ Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
             </div>
+
+
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->

@@ -79,8 +79,12 @@ function updateZillowView(){
 
 function updateWeatherView(data){
 
-  
-      $("#icon").html(data.icon.toUpperCase());
+      var imcon='<img id="image-icon" alt="...">'
+      $("#icon").html(data.icon.toUpperCase()+imcon);
+      $("#image-icon").css("width","45px");
+      $("#image-icon").css("margin-left","20px");
+      $("#image-icon").attr("src",data.icon_url);
+
 
     $("#table-tem").html(data.temp);
     $("#table-mx-tem").html(data.max_temp);
