@@ -28,7 +28,7 @@ SECRET_KEY = ')=m63ldv543c1q!d7e1mlt)x8a_o1nu*f#x-f+ny#8k(xk7s$q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','192.243.100.74','www.fivethree.pro']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.243.100.74','www.fivethree.pro','fivethree.pro']
 
 
 # Application definition

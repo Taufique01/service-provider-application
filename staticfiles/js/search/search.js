@@ -78,7 +78,7 @@ function updateZillowView(){
 
 
 function updateWeatherView(data){
-
+      $("#time-top").html(data.time);
       var imcon='<img id="image-icon" alt="...">'
       $("#icon").html(data.icon.toUpperCase()+imcon);
       $("#image-icon").css("width","45px");
@@ -93,6 +93,16 @@ function updateWeatherView(data){
     $("#table-precipp-acc").html(getValidValue(data.precip_acc));
     $("#summary").html(data.summary);
      
+    $("#week_summary").html(data.week_sum);
+    var table = $('#table-week').DataTable();
+    table.clear();
+    for(var i=0;i<data.week.length;i++){
+       table.row.add( data.week[i]);
+    }
+
+   table.draw();
+    
+  
     
     
     if(data.alert_status)
@@ -100,7 +110,7 @@ function updateWeatherView(data){
             var html_str='<div class="x_title"> <h3 style="margin-bottom: 0px;color: red">Alerts!</h3><div class="clearfix"></div></div>';
 
              for(var i=0;i<data.alerts.length;i++){
-                 html_str= html_str+'<h2><a href="'+ data.alerts[0].uri+'"'   +'>'+data.alerts[0].title+''+'</a> </h2>' +'<p style="margin-bottom: 10px;margin-top: -10px"><span>'+data.alerts[0].title +'</span> to <span>'+data.alerts[0].expires+'</span></p>' +'<p style="text-align: justify">'+data.alerts[0].description+'</p>'; 
+                 html_str= html_str+'<h2><a href="'+ data.alerts[0].uri+'"'   +'>'+data.alerts[0].title+''+'</a> </h2>' +'<p style="margin-bottom: 10px;margin-top: -10px"><span>'+data.alerts[0].time +'</span> to <span>'+data.alerts[0].expires+'</span></p>' +'<p style="text-align: justify">'+data.alerts[0].description+'</p>'; 
              }
              
                 $("#div-alert").html(html_str);
@@ -133,6 +143,30 @@ $(document).ready(function (event) {
            Zillow.setIndex(1);
            updateZillowView();
    });
+
+
+    var table = $('#table-week').DataTable({
+        destroy: true,
+        paging:   false,
+        ordering: false,
+        info:     false,
+        searching: false,
+    
+
+        columns: [
+            { data: 'icon',"render": function ( data, type, row, meta ) {
+                    
+                    return '<img style="width:40px;" src="'+data+'">';
+                 }, className: "align-middle" },
+            { data: null, render: 'day', className: "align-middle" },
+            { data: null, render: 'min_temp', className: "align-middle" },
+            { data: null, render: 'max_temp', className: "align-middle" },
+
+           
+        ],
+    
+    });
+
 
 
     $("#search-form").submit(function (event) {
@@ -196,4 +230,15 @@ $(document).ready(function (event) {
     
 
     });
+
+
+
+
+
+ 
+
+
+
+
+
 });
