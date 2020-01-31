@@ -34,7 +34,7 @@ class GetZillowSearch(APIView):
 class GetDarkSkySearch(APIView):
      
       def getIcon(self,icon):
-          url=settings.BASE_URL+settings.STATIC_URL+'images/icons/'+icon+'.png'
+          url=settings.STATIC_URL+'images/icons/'+icon+'.png'
           return url
 
       

@@ -129,6 +129,11 @@ function updateWeatherView(data){
 
 
 
+
+
+
+
+
 $(document).ready(function (event) {
 
    $('#z-previous').click(function(){
@@ -234,6 +239,11 @@ $(document).ready(function (event) {
 
 
 
+
+  document.getElementById("sign-out-a").onclick=function() {
+     document.getElementById("logout-form").submit();
+     return false; // cancel the actual link
+   }
 
  
 

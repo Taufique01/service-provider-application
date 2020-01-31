@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'zillowAPI',
     'search',
+#####django allauth###########
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
 ]
 
 MIDDLEWARE = [
@@ -69,6 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+
             ],
         },
     },
@@ -129,7 +137,61 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'staticfiles'),#to look for static files
 )
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-LOGIN_REDIRECT_URL = '/'
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+
+
+
+####################Allauth registration#########
+SITE_ID = 1
+ACCOUNT_ADAPTER = 'search.account_adapter.NoNewUsersAccountAdapter'
+
+
+LOGIN_REDIRECT_URL='/'
+ACCOUNT_LOGOUT_REDIRECT_URL='/accounts/login'
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
+ACCOUNT_AUTHENTICATION_METHOD ="username"
+ACCOUNT_CONFIRM_EMAIL_ON_GET =False
+#ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL =BASE_URL
+#ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL =BASE_URL+'/accounts/login'
+#ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS (=3)
+ACCOUNT_EMAIL_REQUIRED =True
+ACCOUNT_EMAIL_VERIFICATION='mandatory'
+#ACCOUNT_EMAIL_SUBJECT_PREFIX (=”[Site] “)
+#ACCOUNT_DEFAULT_HTTP_PROTOCOL (=”http”)
+#ACCOUNT_LOGIN_ATTEMPTS_LIMIT (=5)
+#ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT (=300)
+#ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION =True
+#ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE =True
+#ACCOUNT_LOGIN_ON_PASSWORD_RESET =True
+#ACCOUNT_SESSION_REMEMBER= True
+#ACCOUNT_USER_DISPLAY (=a callable returning user.username)
+ACCOUNT_USERNAME_REQUIRED=True
+
+
+
+# Email backend settings for Django
+EMAIL_BACKEND =  'django.core.mail.backends.console.EmailBackend'#'django.core.mail.backends.smtp.EmailBackend'#backends.smtp.EmailBackend
+EMAIL_HOST = 'smtp.gmail.com'
+##put yours email
+EMAIL_HOST_USER = ''
+##put your password
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+
+
+
+
+
+
+
+
+
+
