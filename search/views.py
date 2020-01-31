@@ -12,7 +12,7 @@ from zillowAPI import ZillowDataType
 from zillowAPI import ZillowAPI
 from zillowAPI import ZillowError
 from . import zipdict
-from .utils import timeFromStamp,dayFromStamp
+from .utils import timeFromStamp,dayFromStamp,degreeF_from_C
 from webapi import settings
 
 class GetZillowSearch(APIView):
@@ -36,7 +36,7 @@ class GetDarkSkySearch(APIView):
       def getIcon(self,icon):
           url=settings.STATIC_URL+'images/icons/'+icon+'.png'
           return url
-
+      
       
       def post(self, request, *args, **kwargs):
           #print('#############################################################')
@@ -51,10 +51,10 @@ class GetDarkSkySearch(APIView):
           ##prepare response parameter
           weather={
             'time' : timeFromStamp(dsky['currently']['time'],dsky['timezone']),
-            'temp' : str(dsky['currently']['temperature'])+'&#8451;',
+            'temp' : degreeF_from_C(dsky['currently']['temperature']),
             'stroam_distance' : str(dsky['currently']['nearestStormDistance'])+'km',
-            'max_temp' : str(dsky['daily']['data'][0]['temperatureMax'])+'&#8451;',
-            'min_temp' : str(dsky['daily']['data'][0]['temperatureMin'])+'&#8451;',
+            'max_temp' : degreeF_from_C(dsky['daily']['data'][0]['temperatureMax']),
+            'min_temp' : degreeF_from_C(dsky['daily']['data'][0]['temperatureMin']),
             'summary' : dsky['daily']['data'][0]['summary'],
             'icon' : dsky['daily']['data'][0]['icon'],
             'alert_status' : False,
@@ -75,9 +75,9 @@ class GetDarkSkySearch(APIView):
           for days in dsky['daily']['data']:
                data={
                      'icon':self.getIcon(days['icon']),
-                     'day':dayFromStamp(days['time'],dsky['timezone']) ,
-                     'min_temp':str(days['temperatureMin'])+'&#8451;',
-                     'max_temp':str(days['temperatureMax'])+'&#8451;',
+                     'day':dayFromStamp(days['time'],dsky['timezone']),
+                     'min_temp':degreeF_from_C(days['temperatureMin']),
+                     'max_temp':degreeF_from_C(days['temperatureMax']),
 
 
                      #'icon_text':days['icon'],

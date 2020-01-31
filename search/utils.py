@@ -16,4 +16,18 @@ def dayFromStamp(timestamp,zone_str):
     day=tm.strftime("%a")
     #print(day)
     return day
- 
+
+
+def celsiusToFahrenheit(celsius):
+
+   fahrenheit = (9.0/5.0) * celsius + 32
+
+   return fahrenheit
+
+HTML_DEGREE_FAHRENHEIT='&#8457;'
+def degreeF_from_C(celsius):
+
+   F=celsiusToFahrenheit(celsius)
+   F='%.2f' % F
+   degreeF=str(F)+HTML_DEGREE_FAHRENHEIT
+   return degreeF
