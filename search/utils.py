@@ -25,9 +25,9 @@ def celsiusToFahrenheit(celsius):
    return fahrenheit
 
 HTML_DEGREE_FAHRENHEIT='&#8457;'
-def degreeF_from_C(celsius):
+def degreeF_from_F(fahrenheit):
 
-   F=celsiusToFahrenheit(celsius)
-   F='%.2f' % F
-   degreeF=str(F)+HTML_DEGREE_FAHRENHEIT
+  
+   #F='%.2f' % F
+   degreeF=str(fahrenheit)+HTML_DEGREE_FAHRENHEIT
    return degreeF

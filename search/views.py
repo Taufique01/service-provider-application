@@ -12,7 +12,7 @@ from zillowAPI import ZillowDataType
 from zillowAPI import ZillowAPI
 from zillowAPI import ZillowError
 from . import zipdict
-from .utils import timeFromStamp,dayFromStamp,degreeF_from_C
+from .utils import timeFromStamp,dayFromStamp,degreeF_from_F
 from webapi import settings
 
 class GetZillowSearch(APIView):
@@ -51,10 +51,10 @@ class GetDarkSkySearch(APIView):
           ##prepare response parameter
           weather={
             'time' : timeFromStamp(dsky['currently']['time'],dsky['timezone']),
-            'temp' : degreeF_from_C(dsky['currently']['temperature']),
+            'temp' : degreeF_from_F(dsky['currently']['temperature']),
             'stroam_distance' : str(dsky['currently']['nearestStormDistance'])+'km',
-            'max_temp' : degreeF_from_C(dsky['daily']['data'][0]['temperatureMax']),
-            'min_temp' : degreeF_from_C(dsky['daily']['data'][0]['temperatureMin']),
+            'max_temp' : degreeF_from_F(dsky['daily']['data'][0]['temperatureMax']),
+            'min_temp' : degreeF_from_F(dsky['daily']['data'][0]['temperatureMin']),
             'summary' : dsky['daily']['data'][0]['summary'],
             'icon' : dsky['daily']['data'][0]['icon'],
             'alert_status' : False,
@@ -76,8 +76,8 @@ class GetDarkSkySearch(APIView):
                data={
                      'icon':self.getIcon(days['icon']),
                      'day':dayFromStamp(days['time'],dsky['timezone']),
-                     'min_temp':degreeF_from_C(days['temperatureMin']),
-                     'max_temp':degreeF_from_C(days['temperatureMax']),
+                     'min_temp':degreeF_from_F(days['temperatureMin']),
+                     'max_temp':degreeF_from_F(days['temperatureMax']),
 
 
                      #'icon_text':days['icon'],
