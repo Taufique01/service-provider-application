@@ -78,12 +78,15 @@ function updateZillowView(){
 
 
 function updateWeatherView(data){
-      $("#time-top").html(data.time);
-      var imcon='<img id="image-icon" alt="...">'
-      $("#icon").html(data.icon.toUpperCase()+imcon);
-      $("#image-icon").css("width","45px");
-      $("#image-icon").css("margin-left","20px");
-      $("#image-icon").attr("src",data.icon_url);
+ 
+      var html_info__btn= '<i id="btn-weather-info" class="fa fa-info-circle float-right" aria-hidden="true"></i>';
+      
+      $("#time-top").html(data.time + html_info__btn);
+     // var imcon='<img id="image-icon" alt="...">'
+      //$("#icon").html(data.icon.toUpperCase()+imcon);
+      //$("#image-icon").css("width","45px");
+      //$("#image-icon").css("margin-left","20px");
+      //$("#image-icon").attr("src",data.icon_url);
 
 
     $("#table-tem").html(data.temp);
@@ -110,7 +113,7 @@ function updateWeatherView(data){
             var html_str='<div class="x_title"> <h3 style="margin-bottom: 0px;color: red">Alerts!</h3><div class="clearfix"></div></div>';
 
              for(var i=0;i<data.alerts.length;i++){
-                 html_str= html_str+'<h2><a href="'+ data.alerts[0].uri+'"'   +'>'+data.alerts[0].title+''+'</a> </h2>' +'<p style="margin-bottom: 10px;margin-top: -10px"><span>'+data.alerts[0].time +'</span> to <span>'+data.alerts[0].expires+'</span></p>' +'<p style="text-align: justify">'+data.alerts[0].description+'</p>'; 
+                 html_str= html_str+'<summary><a style="color: red;text-align: justify;font-size: 15px;font-weight: bold" href="'+ data.alerts[0].uri+'"'   +'>'+data.alerts[0].title+''+'</a> </summary>' +'<p style="margin-bottom: 10px;margin-top: -10px;text-align: justify"><span>'+data.alerts[0].time +'</span> to <span>'+data.alerts[0].expires+'</span><br>' +data.alerts[0].description+'</p>'; 
              }
              
                 $("#div-alert").html(html_str);
@@ -118,23 +121,106 @@ function updateWeatherView(data){
                
         }
       else
-         $("#div-alert").css("display","none");
+        // $("#div-alert").css("display","none");
 
 
 
+   initModal();
+
+   var weather_currently_data="";
+   for(var i in data.currently){
     
+      weather_currently_data=weather_currently_data+ '<div class="p-2">'+ i+': '+data.currently[i]+'</div>';
+
+
+   }
+   
+   $("#weather-info-div").html(weather_currently_data);
+   
+
+
 
 }
 
 
 
 
+function initModal(){
 
 
+  // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("btn-weather-info");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+}
+
+function updateCountsView(counts){
 
 
+    $("#user-count").html(counts.users);
 
+    $("#zillow-count").html(counts.zillow);
+    $("#darksky-count").html(counts.darksky);
+
+
+}
+
+function GetCounts(){
+
+          $.ajax({
+            url:$('#count-form').attr("js-counts-url") ,
+            type: $('#count-form').attr("method"),
+            data: $('#count-form').serialize(),
+            dataType: 'json',
+            success: function (counts) {
+               updateCountsView(counts);
+
+            },
+
+
+            error: function (request, status, error) {
+                
+                 
+                
+            }
+        });
+
+  
+
+
+}
+
+function isEmptyOrSpaces(str){
+    return str === null || str.match(/^ *$/) !== null;
+}
 $(document).ready(function (event) {
+
+/////get the users, zillow and darksky counts
+///after a interval
+   GetCounts();
+   setInterval(GetCounts,5000);
 
    $('#z-previous').click(function(){
       Zillow.setIndex(-1);
@@ -161,7 +247,7 @@ $(document).ready(function (event) {
         columns: [
             { data: 'icon',"render": function ( data, type, row, meta ) {
                     
-                    return '<img style="width:40px;" src="'+data+'">';
+                    return '<img style="width:20px;" src="'+data+'">';
                  }, className: "align-middle" },
             { data: null, render: 'day', className: "align-middle" },
             { data: null, render: 'min_temp', className: "align-middle" },
@@ -177,41 +263,44 @@ $(document).ready(function (event) {
     $("#search-form").submit(function (event) {
 
         event.preventDefault();
-        $('.fa-spin-zlw').css("display","inline");       
-        $('.fa-check-zlw').css("display","none");
-        $('.fa-close-zlw').css("display","none");
         $('.fa-spin-ds').css("display","inline");       
         $('.fa-check-ds').css("display","none");
         $('.fa-close-ds').css("display","none");
-     
-        $.ajax({
-            url:$(this).attr("js-zlw-search-url") ,
-            type: $(this).attr("method"),
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function (data) {
-                $('.fa-spin-zlw').css("display","none");
-                $('.fa-check-zlw').css("display","inline");
+        var search_inputs =$(this).serialize();
+        if(!isEmptyOrSpaces($('input[name="address"]').val())){
+
+             $('.fa-spin-zlw').css("display","inline");       
+             $('.fa-check-zlw').css("display","none");
+             $('.fa-close-zlw').css("display","none");
+ 
+              $.ajax({
+              url:$(this).attr("js-zlw-search-url") ,
+              type: $(this).attr("method"),
+              data: search_inputs,
+              dataType: 'json',
+              success: function (data) {
+                  $('.fa-spin-zlw').css("display","none");
+                  $('.fa-check-zlw').css("display","inline");
                 
-                Zillow.set(JSON.parse(data));
-                $('#z-total').html(Zillow.datas().length);
-                updateZillowView();
-            },
+                  Zillow.set(JSON.parse(data));
+                  $('#z-total').html(Zillow.datas().length);
+                  updateZillowView();
+              },
 
 
-            error: function (request, status, error) {
+              error: function (request, status, error) {
                  $('.fa-spin-zlw').css("display","none");
                  $('.fa-close-zlw').css("display","inline");
                  
                 
             }
-        });
-
+            });
+        }
 
           $.ajax({
             url:$(this).attr("js-ds-search-url") ,
             type: $(this).attr("method"),
-            data: $(this).serialize(),
+            data: search_inputs,
             dataType: 'json',
             success: function (data) {
                 $('.fa-spin-ds').css("display","none");

@@ -9,6 +9,6 @@ urlpatterns = [
     path('timezone/',login_required(TemplateView.as_view(template_name="timezone.html")),name='timezone'),
     path('zillow/', login_required(views.GetZillowSearch.as_view()),name='zillow_search'),
     path('darksky/', login_required(views.GetDarkSkySearch.as_view()),name='darksky_search'),
-
+    path('counts/', login_required(views.Counts.as_view()),name='search_counts'),
 ]
 

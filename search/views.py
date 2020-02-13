@@ -1,12 +1,12 @@
 from django.shortcuts import render
-
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from .models import Count
 import json
 import requests
-
+from django.db import transaction
 from zillowAPI import zillow
 from zillowAPI import ZillowDataType
 from zillowAPI import ZillowAPI
@@ -14,11 +14,18 @@ from zillowAPI import ZillowError
 from . import zipdict
 from .utils import timeFromStamp,dayFromStamp,degreeF_from_F
 from webapi import settings
+from django.utils.decorators import method_decorator
+
 
 class GetZillowSearch(APIView):
      
       def post(self, request, *args, **kwargs):
-         # print('ggggg')
+
+          Count.load().count_zillow()
+
+
+
+          #print('ggggg')
           #print(request.data)
           address = request.data.get('address')#"3400 Pacific Ave"
           postal_code =request.data.get('zip')# "90292"
@@ -31,6 +38,7 @@ class GetZillowSearch(APIView):
           #print(json_string)
           return Response(data=json_string, status=status.HTTP_200_OK)
 
+
 class GetDarkSkySearch(APIView):
      
       def getIcon(self,icon):
@@ -39,6 +47,8 @@ class GetDarkSkySearch(APIView):
       
       
       def post(self, request, *args, **kwargs):
+
+          Count.load().count_darksky()
           #print('#############################################################')
           #print(request.data)
           #address = request.data.get('address')#"3400 Pacific Ave"
@@ -47,18 +57,21 @@ class GetDarkSkySearch(APIView):
           request_url='https://api.darksky.net/forecast/'+key+'/'+zipdict.zip[postal_code]+'?exclude=[minutely,hourly]'
           print(request_url)
           dsky = requests.get(request_url).json()
-          
+          #print(dsky)
           ##prepare response parameter
           weather={
             'time' : timeFromStamp(dsky['currently']['time'],dsky['timezone']),
             'temp' : degreeF_from_F(dsky['currently']['temperature']),
-            'stroam_distance' : str(dsky['currently']['nearestStormDistance'])+'km',
+            'stroam_distance' : str(dsky['currently']['nearestStormDistance'])+'miles',
             'max_temp' : degreeF_from_F(dsky['daily']['data'][0]['temperatureMax']),
             'min_temp' : degreeF_from_F(dsky['daily']['data'][0]['temperatureMin']),
             'summary' : dsky['daily']['data'][0]['summary'],
             'icon' : dsky['daily']['data'][0]['icon'],
             'alert_status' : False,
             'precip_acc' : False,
+
+
+            
           }
           ##get the icon image
           weather['icon_url']=self.getIcon(dsky['daily']['data'][0]['icon'])
@@ -88,9 +101,31 @@ class GetDarkSkySearch(APIView):
           ##add week data to response
           weather['week_sum']=dsky['daily']['summary']
           weather['week']=week
+
+
+          weather['currently']=dsky['currently']
              
 
         
           #print(weather)
           return Response(data=weather, status=status.HTTP_200_OK)
+
+
+
+
+
+
+class Counts(APIView):
+     
+      def post(self, request, *args, **kwargs):
+          print('getting counts###############')
+          users=User.objects.all().count()
+          counts=Count.load()
+          return Response(data={'users':users,'zillow':counts.zillow_used,'darksky':counts.darksky_used}, status=status.HTTP_200_OK)
+
+
+
+
+
+
 
