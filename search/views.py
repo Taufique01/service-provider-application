@@ -175,7 +175,7 @@ class DirectoryTable(APIView):
 
      def post(self, request, *args, **kwargs):
           print('#####getting durectory###############')
-          #print(request.data)
+          print(request.data)
           draw, start, length, search  = self.processTableRequest(request.data)
           sp_count,sp_count_filtered,sp_data_filtered = self.getSPdata( start, length, search)
 
