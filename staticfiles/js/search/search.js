@@ -110,7 +110,7 @@ function updateWeatherView(data){
     
     if(data.alert_status)
       {
-            var html_str='<div class="x_title"> <h3 style="margin-bottom: 0px;color: red">Alerts!</h3><div class="clearfix"></div></div>';
+            var html_str='';
 
              for(var i=0;i<data.alerts.length;i++){
                  html_str= html_str+'<summary><a style="color: red;text-align: justify;font-size: 15px;font-weight: bold" href="'+ data.alerts[0].uri+'"'   +'>'+data.alerts[0].title+''+'</a> </summary>' +'<p style="margin-bottom: 10px;margin-top: -10px;text-align: justify"><span>'+data.alerts[0].time +'</span> to <span>'+data.alerts[0].expires+'</span><br>' +data.alerts[0].description+'</p>'; 
