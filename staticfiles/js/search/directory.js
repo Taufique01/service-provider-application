@@ -88,8 +88,10 @@ $(document).ready(function (event) {
 
                 };
 
-
-
+                if ($('#same-county').is(":checked")) {
+                    d.showSameCounty = true;
+                } else
+                    d.showSameCounty = false;
 
 
             }
@@ -124,7 +126,7 @@ $(document).ready(function (event) {
     $('#post-code').bind("enterKey", function (e) {
         ////table.ajax.reload(callback,pagerefresh);
 
-          table.ajax.reload();
+        table.ajax.reload();
 
     });
 
@@ -170,9 +172,9 @@ $(document).ready(function (event) {
         else
             $('#ALL-trades-input').prop('checked', false);
 
-          table.ajax.reload();
+        table.ajax.reload();
 
-            
+
 
     });
 
@@ -181,8 +183,17 @@ $(document).ready(function (event) {
         if (this.checked) {
             $('.js-trades-input').prop('checked', true);
             table.ajax.reload();
-          
+
         }
+
+
+
+    });
+
+    $('#same-county').change(function () {
+
+
+        table.ajax.reload();
 
 
 

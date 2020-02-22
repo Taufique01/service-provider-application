@@ -118,11 +118,19 @@ class DirectoryTable(APIView):
          if not search['postal_code']:
             sp_data_filtered=sp_data
          else:
-            sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
-         print(search['trade'])
+             ##code to habdle showSameCounty
+             if search['sameCounty']=='true':##if showSameCounty is on
+                ##for on get the county name
+                sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
+                county_name=sp_data_filtered[0].county
+                ##for on search with county name
+                sp_data_filtered=sp_data.filter(county=county_name)
+             else:##if showSameCounty is off
+                sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
+                
+
          if search['trade']:
             sp_data_filtered=sp_data_filtered.filter(trade__in=search['trade'])
-         
          return sp_data_filtered
          
           
@@ -166,7 +174,7 @@ class DirectoryTable(APIView):
              search['trade']=False
           ##strip to handle space only inputs on search box
           search['postal_code']=table_data.get('columns[1][search][value]').strip()#string
-              
+          search['sameCounty']=table_data.get('showSameCounty')#string
    
           return draw, start, length, search
           
