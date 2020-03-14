@@ -1,0 +1,429 @@
+{% load static %}
+{% load calculator %}
+<html lang="en" class=" ">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'images/title_logo.png' %}" type="image/ico">
+
+    <title>FiveThree.pro</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static '/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static '/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
+
+    <link href="{% static '/css/custom/timezone.css' %}" rel="stylesheet">
+
+    <link href="{% static '/css/custom/nav.css' %}" rel="stylesheet">
+
+
+    <style>
+
+
+
+    </style>
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <img class="img-fluid" src="{% static '/images/logo_nav.png' %}" alt="..." class="">
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2> {{ request.user.username }}</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br>
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+
+                                <li>
+
+                                    <a href="{% url 'propertyinfo' %}"><i class="fa fa-building-o"></i> Property Info </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'timezone' %}"><i class="fa fa-clock-o"></i> Time Zones </a>
+
+                                </li>
+
+
+                                <li>
+                                    <a href="{% url 'directory' %}"><i class="fa fa-arrows"></i> Directory </a>
+
+                                </li>
+
+                                <li>
+                                    <a href="{% url 'calculator' %}"><i class="fa fa-arrows"></i> Calculator </a>
+
+                                </li>
+
+                                <li>
+                                    <a><i style="text-align: center;margin-left: -3px;" class="fa fa-gear fa-spin"></i> &nbsp;Coming Soon </a>
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                    <!-- /sidebar menu -->
+
+                    <!-- /menu footer buttons -->
+                    <!--   <div class=" sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+
+
+                        <a data-toggle="tooltip" data-placement="top" title="" href="login.html" data-original-title="Logout">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>-->
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    {{ request.user.username }}
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item" href="javascript:;">
+
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;">Help</a>
+                                    <a style="padding: 0px 0px 0px 0px" id="sign-out-a" class="dropdown-item" href="">
+
+
+                                        <form id="logout-form" style="display: block;margin-bottom: 0px;padding-bottom: 0px;" method="post" action="{% url 'account_logout' %}">
+                                            {% csrf_token %}
+
+                                            <button class="signout-btn" style="border: none;background-color: transparent;width: 100%;height: 40px;text-align: left;padding-left: 20px" type="submit">Sign Out<i class="fa fa-sign-out pull-right"></i></button>
+                                        </form>
+                                    </a> </div>
+                            </li>
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+
+
+
+
+        </div>
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+
+                <div class="clearfix"></div>
+                <div class="row">
+
+
+                    <div class="col-6">
+
+                        <h2>Results for {{calculator}}:</h2>
+                        {% if calculator %}
+                        <form id="calculator-left-form" method="get" action="#">
+
+                            <div>
+                                <div style="font-size: 17px">Base</div>
+                                <!-- Default inline 1-->
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input value="Appliance" type="radio" class="js-cal-inputs custom-control-input" id="radio-appl" name="app_sys_wh">
+                                    <label class="custom-control-label" for="radio-appl">Appliance</label>
+                                </div>
+
+                                <!-- Default inline 2-->
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input value="System" type="radio" class="js-cal-inputs  custom-control-input" id="radio-sys" name="app_sys_wh">
+                                    <label class="custom-control-label" for="radio-sys">System</label>
+                                </div>
+
+                                <!-- Default inline 3-->
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input value="Whole Home" type="radio" class="js-cal-inputs  custom-control-input" id="radio-wh" name="app_sys_wh">
+                                    <label class="custom-control-label" for="radio-wh">Whole Home</label>
+                                </div>
+
+                            </div>
+
+                            <div style="display: none" id="div-appl">
+                                {% for appl in calculator.appl.all %}
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input class="js-cal-inputs js-appl-plans custom-control-input" type="checkbox" id="appl{{appl.id}}" value="{{appl.value}}" data-tag="{{appl.text}}">
+                                    <label class="custom-control-label" for="appl{{appl.id}}">{{appl.text}}</label>
+                                </div> {% endfor %}
+
+
+
+                            </div>
+
+
+                            <div style="display: none" id="div-sys">
+                                {% for sys in calculator.sys.all %}
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input class="js-cal-inputs js-sys-plans custom-control-input" type="checkbox" id="sys{{sys.id}}" value="{{sys.value}}" data-tag="{{sys.text}}">
+                                    <label class="custom-control-label" for="sys{{sys.id}}">{{sys.text}}</label>
+                                </div> {% endfor %}
+
+
+
+
+                            </div>
+
+                            <div style="display: none" id="div-wh">
+                                {% for wh in calculator.wh.all %}
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input class="js-cal-inputs  js-wh-plans custom-control-input" type="checkbox" id="wh{{wh.id}}" value="{{wh.value}}" data-tag="{{wh.text}}">
+                                    <label class="custom-control-label" for="wh{{wh.id}}">{{wh.text}}</label>
+                                </div> {% endfor %}
+                            </div>
+
+
+                            <div>
+                                <div style="font-size: 17px">Optional</div>
+
+                                {% for optional in optionals %}
+                                <!-- Default unchecked -->
+                                <div class="custom-control custom-checkbox">
+                                    <input id="addi{{optional.id}}" value="{{optional.cost}}" type="checkbox" class="js-cal-inputs js-additional-check custom-control-input">
+                                    <label class="custom-control-label" for="addi{{optional.id}}">{{optional.text}}</label>
+                                </div>
+                                {% endfor %}
+
+                                <div style="font-size: 17px">Additional</div>
+
+                                {% if calculator.surge_protect %}
+                                <div class="custom-control custom-checkbox">
+                                    <input id="surge-protect-chk" value="surge" type="checkbox" class="js-cal-inputs  custom-control-input">
+                                    <label class="custom-control-label" for="surge-protect-chk">Surge Protect</label>
+
+                                    <select id="surge-protect-select" class="js-cal-inputs  browser-default  custom-select custom-select-sm mb-2">
+                                        {% for surge_protect in surge_protects %}
+
+                                        <option value="{{surge_protect.minimum_cost}}">{{surge_protect.text}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% endif %}
+
+                                {% if calculator.electronics_protect %}
+
+                                <div class="custom-control custom-checkbox">
+                                    <input id="electronics-protect-chk" value="electronics" type="checkbox" class="js-cal-inputs  custom-control-input">
+                                    <label class="custom-control-label" for="electronics-protect-chk">Electronics Protect</label>
+
+
+                                    <select id="electronics-protect-select" class="js-cal-inputs  browser-default  custom-select custom-select-sm mb-2">
+                                        {% for e_protect in e_protects %}
+
+                                        <option value="{{e_protect.cost}}">{{e_protect.text}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% endif %}
+
+
+                            </div>
+
+
+
+                            {% if calculator.line_protect %}
+
+                            <div class="custom-control custom-checkbox">
+                                <input id="line-protect-chk" value="{{line_protect.cost}}" type="checkbox" class="js-cal-inputs  custom-control-input">
+                                <label class="custom-control-label" for="line-protect-chk">Line Protect {{line_protect.cost}}$</label>
+                            </div>
+
+                            {% endif %}
+
+
+                            <div style="font-size: 17px">Discount</div>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input class="js-cal-inputs  custom-control-input" type="checkbox" id="discount1-chk" value="0">
+                                <label class="custom-control-label" for="discount1-chk">Month Free</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <!-- discount2 taken from server -->
+
+                                <input class="js-cal-inputs  custom-control-input" type="checkbox" id="discount2-chk" value="{{discount}}">
+                                <label class="custom-control-label" for="discount2-chk">{{discount}}$ Off</label>
+                            </div>
+
+                            <input id="tax-in" type="text" value={{calculator.tax}} style="display: none">
+
+                        </form>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-6">
+
+
+                        <form class="row" method="post" action="{%  url 'calculator' %}">
+                            {% csrf_token %}
+                            <input type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State name">
+                            <input type="submit" value="Search">
+                        </form>
+
+
+
+                        <div style="display: {% style_display calculator %}">
+
+                            <h2>Output</h2>
+                            <div style="font-size: 17px">Base</div>
+                            <div>
+                                <div> which: <span id="out-base-title"></span></div>
+                                <div id="out-base-plans">
+
+
+                                </div>
+                                <div> Yearly:<span id="out-base-total"></span>$ with discount</div>
+                            </div>
+
+                            <div style="font-size: 17px">Base with Optional</div>
+                            <div>
+                                <div>Total:<span id="base-option-output"></span></div>
+                                <div>Total:<span id="base-option-output-dis"></span><span>$&nbsp;yearly with discount</span></div>
+                            </div>
+
+                            <div style="font-size: 17px">Additional</div>
+                            <div>
+
+                                <div style="display: {% style_display_additional calculator.surge_protect %}">Surge Protect-<span id="surge-output"></span> </div>
+                                <div style="display: {% style_display_additional calculator.electronics_protect %}">Electronic Protect- <span id="electronics-output"></span></div>
+                                <div style="display: {% style_display_additional calculator.line_protect %}">Line Protect-<span id="line-output"></span></div>
+
+                            </div>
+
+
+                            <div>
+                                <div>
+                                    <input id="name-inpuy" type="text" placeholder="Name">
+
+                                </div>
+                                <div>
+
+                                    <input id="phone-input" type="tel" id="phone" name="phone" placeholder="Phone">
+
+                                </div>
+
+                                <div>
+
+                                    <input id="" type="button" value="Offer">
+                                    <input id="" type="button" value="Confirmation">
+                                    <input id="" type="button" value="Disclosure">
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+            <!-- page content -->
+
+
+
+
+
+
+        </div>
+
+
+
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                Copyright 2020 all rights reserved.
+            </div>
+
+
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
+    </div>
+    <!-- jQuery -->
+    <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static '/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static '/vendors/iCheck/icheck.min.js' %}"></script>
+    <script src="{% static '/vendors/switchery/dist/switchery.min.js' %}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{% static '/build/js/custom.min.js' %}"></script>
+    <!-- for table -->
+    <script src="{% static '/vendors/datatables/js/jquery.dataTables.min.js' %}"></script>
+
+    <!--  Scripts to implement search-->
+    <script src="{% static '/js/search/calculator.js' %}"></script>
+
+
+
+
+</body>
+
+
+</html>

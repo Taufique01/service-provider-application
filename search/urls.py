@@ -14,6 +14,9 @@ urlpatterns = [
     path('directories/',login_required(TemplateView.as_view(template_name="directory.html")),name='directory'),
 
     path('directories/sp/filter/', login_required(views.DirectoryTable.as_view()),name='sp_table_filter'),
+    path('directories/calculator/', login_required(views.CalculatorView.as_view()),name='calculator'),
+
+   
 ]
 
 

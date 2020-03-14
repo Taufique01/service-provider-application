@@ -75,5 +75,96 @@ class SP(models.Model):
       return self.postal_code+' '+ self.city
 
 
+######models for calculator page
+
+
+
+class Calculator(models.Model):
+    state = models.CharField(max_length=50)
+    tax = models.FloatField(default=0,max_length=200)
+    surge_protect=models.BooleanField()
+    line_protect=models.BooleanField()
+    electronics_protect=models.BooleanField()
+
+
+  
+
+    def __str__(self):
+       return self.state
+
+
+class Appliance(models.Model):
+      calculator=models.ForeignKey(Calculator, related_name='appl',on_delete=models.CASCADE)
+      value=models.FloatField()
+      text= models.CharField(max_length=200)
+      def __str__(self):
+        return self.calculator.state+' '+self.text+' '+ str(self.value)+'$ monthly'
+
+class System(models.Model):
+      calculator=models.ForeignKey(Calculator, related_name='sys',on_delete=models.CASCADE)
+      value=models.FloatField()
+      text= models.CharField(max_length=200)
+      def __str__(self):
+        return self.calculator.state+' '+self.text+' '+ str(self.value)+'$ monthly'
+
+class WholeHome(models.Model):
+      calculator=models.ForeignKey(Calculator, related_name='wh',on_delete=models.CASCADE)
+      value=models.FloatField()
+      text= models.CharField(max_length=200)
+      def __str__(self):
+        return self.calculator.state+' '+self.text+' '+ str(self.value)+'$ monthly'
+
+class SurgeProtect(models.Model):
+      '''per month '''
+      minimum_cost=models.FloatField()
+      maximum_cost=models.FloatField()
+      text= models.CharField(default='Coverage',max_length=200)
+      def __str__(self):
+        return self.text+' monthly'
+
+class ElectronicsProtect(models.Model):
+      '''per month '''
+      cost=models.FloatField()
+      text= models.CharField(max_length=200)
+      def __str__(self):
+        return self.text+' monthly'
+
+class LineProtect(models.Model):
+      '''per month '''
+      cost=models.FloatField()
+      def __str__(self):
+        return str(self.cost)+'$ monthly'
+
+class Optional(models.Model):
+      '''per year '''
+      cost=models.FloatField()
+      text= models.CharField(max_length=200)
+      def __str__(self):
+        return self.text +' yearly'
+
+
+
+class Discount(models.Model):
+      '''per month '''
+      cost=models.FloatField(default=100)
+      def __str__(self):
+        return str(self.cost)+' yearly'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

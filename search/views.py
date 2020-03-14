@@ -4,9 +4,12 @@ from django.db.models import Count
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Count,SP
+from rest_framework.renderers import TemplateHTMLRenderer
+
+from .models import Count,SP,Calculator,Appliance,System,WholeHome,SurgeProtect,LineProtect,ElectronicsProtect,Optional,Discount
 import json
 import requests
+
 from django.db import transaction
 from zillowAPI import zillow
 from zillowAPI import ZillowDataType
@@ -123,8 +126,9 @@ class DirectoryTable(APIView):
                 ##for on get the county name
                 sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
                 county_name=sp_data_filtered[0].county
+                state_name=sp_data_filtered[0].state
                 ##for on search with county name
-                sp_data_filtered=sp_data.filter(county=county_name)
+                sp_data_filtered=sp_data.filter(county=county_name,state=state_name)
              else:##if showSameCounty is off
                 sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
                 
@@ -201,8 +205,32 @@ class DirectoryTable(APIView):
 
 
 
+class CalculatorView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'calculator.html'
+    http_method_names=['get','post',]
+    def get(self, request):
+
+        return Response({'calculator': None})
 
 
+    def post(self, request):
+        
+
+        try:
+           calculator = Calculator.objects.get(state= request.data.get('state_name'))
+        
+           optionals=Optional.objects.all()
+           surge_protects=SurgeProtect.objects.all()
+           e_protects=ElectronicsProtect.objects.all()
+           line_protect=LineProtect.objects.all()[0]
+           discount=Discount.objects.all()[0]
+           return Response({'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount})
+        except:
+           return Response({'calculator': None})
+
+        
+ 
 class Counts(APIView):
      
       def post(self, request, *args, **kwargs):
@@ -210,6 +238,8 @@ class Counts(APIView):
           users=User.objects.all().count()
           counts=Count.load()
           return Response(data={'users':users,'zillow':counts.zillow_used,'darksky':counts.darksky_used}, status=status.HTTP_200_OK)
+
+
 
 
 

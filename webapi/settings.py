@@ -80,6 +80,10 @@ TEMPLATES = [
                 
 
             ],
+            'libraries':{
+                      'calculator': 'search.templatetags.calculator',
+
+            },
         },
     },
 ]
