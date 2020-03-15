@@ -1,0 +1,36 @@
+.nav-title{
+
+
+
+
+}
+
+
+.profile_info{
+ padding-left:15px;
+
+
+}
+
+.menu_section h3{
+
+margin-left:-5px;
+
+}
+
+
+
+.login-btn{
+ border:none;
+ background-color:transparent;
+
+}
+
+.signout-btn:focus {
+  outline: none;
+}
+
+
+.login-btn:focus {
+  outline: none;
+}

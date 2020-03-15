@@ -1,0 +1,89 @@
+
+
+
+
+
+
+
+
+
+#local-clock{
+   line-height:1!important;
+   direction:ltr!important;
+   list-style-type:disc!important;
+   display:inline-block!important;
+
+
+  max-width:213px!important;
+  min-width:180px;
+  min-height:100px!important;
+
+  padding-top:15px;
+  padding-bottom:10px;
+  padding-right:0px;
+  
+
+ box-sizing: border-box!important;
+
+
+ overflow:hidden;
+  
+
+
+  
+  background-color: #f3f3f3!important;
+  
+  
+}
+.clock-title{
+
+ font-size:16px;
+ margin-bottom: 0px;
+ margin-top:0px;
+  
+
+
+}
+#clockbox{
+font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-top: 0px;
+
+}
+.hour{
+  
+font-weight: bold;
+
+}
+.minute{
+font-weight: bold;
+
+
+}
+
+.second{
+  opacity: 0.6;
+  font-weight:bold;
+  font-size: 18px;
+
+
+}
+
+
+.am-pm{
+  font-size: 15px;
+  margin-left: 4px;
+  font-weight: bold;
+  
+
+
+
+}
+#datebox{
+  font-size: 14px;
+
+
+  
+
+}
