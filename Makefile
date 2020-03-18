@@ -14,6 +14,5 @@ serve:venv
 
 deploy:develop
 	env/bin/python manage.py collectstatic  --noinput #--clear
-	env/bin/gunicorn -p app.pid --bind 0.0.0.0:8001 webapi.wsgi --daemon #first upload a working test app to start the server#kill -HUP $( cat app.pid )
-
-
+	kill -HUP $( cat app.pid )
+	echo "Deploy successful"

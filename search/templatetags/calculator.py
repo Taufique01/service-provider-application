@@ -1,6 +1,7 @@
 from django import template
-
-
+import datetime
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 register = template.Library()
 
@@ -21,3 +22,15 @@ def style_display(value):
     
     
     return 'none'
+
+
+@register.simple_tag
+def after_30_days():
+   
+    date=datetime.date.today() + relativedelta(months=+1)
+    return date.strftime('%d, %b %Y')
+
+@register.simple_tag
+def after_60_days():
+    date=datetime.date.today() + relativedelta(months=+2)
+    return date.strftime('%d, %b %Y')

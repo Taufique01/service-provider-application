@@ -15,7 +15,7 @@ from zillowAPI import zillow
 from zillowAPI import ZillowDataType
 from zillowAPI import ZillowAPI
 from zillowAPI import ZillowError
-from . import zipdict
+from . import zipdict, calcmessage
 from .utils import timeFromStamp,dayFromStamp,degreeF_from_F
 from webapi import settings
 from django.utils.decorators import method_decorator
@@ -204,7 +204,7 @@ class DirectoryTable(APIView):
 
 
 
-
+from pyzipcode  import ZipCodeDatabase
 class CalculatorView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'calculator.html'
@@ -218,14 +218,23 @@ class CalculatorView(APIView):
         
 
         try:
-           calculator = Calculator.objects.get(state= request.data.get('state_name'))
-        
+           input=request.data.get('state_name')
+           if input.isalpha():
+              calculator = Calculator.objects.get(state=input.upper())
+              zipcode=''
+           elif input.isdigit():
+              zcdb = ZipCodeDatabase()
+              zip= zcdb[int(input)]
+              calculator = Calculator.objects.get(state=zip.state)
+              zipcode=zip.zip
+           else:
+              return Response({'calculator': None})
            optionals=Optional.objects.all()
            surge_protects=SurgeProtect.objects.all()
            e_protects=ElectronicsProtect.objects.all()
            line_protect=LineProtect.objects.all()[0]
            discount=Discount.objects.all()[0]
-           return Response({'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount})
+           return Response({'zipcode':zipcode,'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount,'calcmessage':calcmessage.message},)
         except:
            return Response({'calculator': None})
 
