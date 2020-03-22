@@ -18,3 +18,10 @@ requests-oauthlib==1.3.0
 six==1.14.0
 sqlparse==0.3.1
 urllib3==1.25.8
+
+
+
+Hello Asdff
+Thank you for choosing Cinch Home Services. Your warranty number is fgfgfgfgfg. Coverage will begin in 18, Apr 2020. [CHECKBOX: Y/Your online account has been registered and your email is the user name. Your temporary password is Welcome123. You can go to https://my.cinchhomeservices.com/home, to place claims and change billing information.] Our Customer Service number in 1-800-474-4047 and you may also place claims online at: placemyclaim.com. Please allow 7-10 business days for your welcome kit to arrive in the mail.
+Feel free to reach out to me if you need to make any changes or have any questions./n[CHECKBOX: Y/As a reminder, we do also offer Surge Protection and Electronics Protection.]
+Have a great day!

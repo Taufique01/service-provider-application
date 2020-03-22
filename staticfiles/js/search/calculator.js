@@ -11,6 +11,12 @@ var TAX = 0;
 var TAX_TAG_SMALL = '<small>&nbsp;with tax</small>'
 var text_output = "";
 
+var DISCLOSURE = {};
+var ADDITIONAL_TOTAL_MONTHLY = 0;
+var OPTIONAL_TOTAL_MONTHLY = 0;
+
+
+
 function applyTax(input) {
 
     return input + input * TAX / 100;
@@ -81,6 +87,10 @@ function baseOutputHtml_row(monthly, discount2, tag) {
 }
 
 function displayOutput() {
+    ///make the dictionary used to generate
+    //disclosure message empty every time
+    DISCLOSURE = {};
+
     ///collect the discount datas
     if ($("#discount2-chk").prop("checked")) {
         var discount2 = parseFloat($("#discount2-chk").val());
@@ -134,6 +144,8 @@ function displayOutput() {
             if (appl_plan.prop("checked")) {
                 //tag is appliance type tag
                 var tag = appl_plan.data("tag");
+                DISCLOSURE[tag] = parseFloat(appl_plan.val());
+
                 var base_monthly = parseFloat(appl_plan.val());
                 ///base_monthly cost after applying tax
                 //base_monthly = applyTax(base_monthly, tax);
@@ -164,9 +176,13 @@ function displayOutput() {
         for (var i = 0; i < sys_plans.length; i++) {
             var sys_plan = $(sys_plans[i]);
 
+
+
+
             if (sys_plan.prop("checked")) {
                 //tag is appliance type tag
-                var tag = sys_plan.data("tag")
+                var tag = sys_plan.data("tag");
+                DISCLOSURE[tag] = parseFloat(sys_plan.val());
                 var base_monthly = parseFloat(sys_plan.val());
                 ///base_monthly cost after applying tax
                 // base_monthly = applyTax(base_monthly, tax);
@@ -192,11 +208,16 @@ function displayOutput() {
 
         var wh_plans = $(".js-wh-plans");
         for (var i = 0; i < wh_plans.length; i++) {
+
             var wh_plan = $(wh_plans[i]);
+
+
+
 
             if (wh_plan.prop("checked")) {
                 //tag is appliance type tag
-                var tag = wh_plan.data("tag")
+                var tag = wh_plan.data("tag");
+                DISCLOSURE[tag] = parseFloat(wh_plan.val());
                 var base_monthly = parseFloat(wh_plan.val());
                 ///base_monthly cost after applying tax
                 //  base_monthly = applyTax(base_monthly, tax);
@@ -220,10 +241,13 @@ function displayOutput() {
 
     /////get additionals values
 
+    var additional_total_monthly = 0;
+
+
     if ($("#surge-protect-chk").prop("checked")) {
         var surge_protect = $("#surge-protect-select").children("option:selected").val();
         surge_protect = applyTax(parseFloat(surge_protect));
-
+        additional_total_monthly = additional_total_monthly + surge_protect;
         var surge_protect_output_html = surge_protect.toFixed(2) + "$/month" + ', ' + (surge_protect * 12).toFixed(2) + "$/year";
 
     } else {
@@ -234,6 +258,7 @@ function displayOutput() {
     if ($("#electronics-protect-chk").prop("checked")) {
         var electronics_protect = $("#electronics-protect-select").children("option:selected").val();
         electronics_protect = applyTax(parseFloat(electronics_protect));
+        additional_total_monthly = additional_total_monthly + electronics_protect;
         var electronics_protect_output_html = electronics_protect.toFixed(2) + "$/month" + ', ' + (electronics_protect * 12).toFixed(2) + "$/year";
 
     } else {
@@ -246,6 +271,7 @@ function displayOutput() {
     if ($("#line-protect-chk").prop("checked")) {
         var line_protect = $("#line-protect-chk").val();
         line_protect = applyTax(parseFloat(line_protect));
+        additional_total_monthly = additional_total_monthly + line_protect;
         var line_protect_output_html = line_protect.toFixed(2) + "$/month" + ', ' + (line_protect * 12).toFixed(2) + "$/year";
     } else {
         var line_protect_output_html = NOT_APPLICABLE;
@@ -272,6 +298,11 @@ function displayOutput() {
 
     text_output = "Base-\r\n" +
         base_output_text + "Base with Options-\r\n" + base_options_output_text + "Additiona- \r\n" + "Surge Protect- " + surge_protect_output_html + "\r\n" + "Electronics Protect- " + electronics_protect_output_html + "\r\n" + "Line Protect-" + line_protect_output_html;
+    ///for disclosure message
+    ADDITIONAL_TOTAL_MONTHLY = additional_total_monthly;
+    OPTIONAL_TOTAL_MONTHLY = options_monthly;
+
+
 
     console.log(text_output);
 
@@ -279,7 +310,43 @@ function displayOutput() {
 }
 
 
+
+
+
+
+
+
+
 $(document).ready(function (event) {
+
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    // var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal 
+    // btn.onclick = function () {
+    //   modal.style.display = "block";
+    // }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+
 
     $("#radio-appl").click(function () {
 
@@ -335,10 +402,97 @@ $(document).ready(function (event) {
     });
 
 
+    $("#disclosure-btn").click(function () {
+
+        var baselen = Object.keys(DISCLOSURE).length;
+
+        // alert(baselen);
+        if (baselen == 1) {
+            disclosureMessage();
+            modal.style.display = "block";
+        } else if (baselen > 1) {
+            var yes_no = confirm("Choose single onption for Base input or showing results for\r\n" + Object.keys(DISCLOSURE)[0]);
+            if (yes_no) {
+                disclosureMessage();
+                modal.style.display = "block";
+
+            }
+        } else {
+
+
+            alert("Invalid input for Base");
+        }
+
+
+    });
+
+    $("#popup-text").contextmenu(function () {
+        // alert("Handler for .contextmenu() called.");
+
+
+
+        $(this).select();
+        document.execCommand("copy");
+
+        return false;
+
+
+
+    });
+
+    function disclosureMessage() {
+
+        var after_30_days = $("#after-30-days").text();
+        var after_60_days = $("#after-60-days").text();
+
+
+        if ($("#discount1-chk").prop("checked")) {
+            var dis_meg = DISCLOSURE_MESSAGE_2_IF_30_FREE;
+
+            dis_meg = dis_meg.replace("[ADDITIONAL TOTAL MONTHLY]", ADDITIONAL_TOTAL_MONTHLY.toFixed(2));
+
+            //  cal_meg=cal_meg.replace("[TOTAL INCLUDING OPTIONS AND ADDITIONS]",)
+
+
+        } else {
+            var dis_meg = DISCLOSURE_MESSAGE_2_IF_NOT_30_FREE;
+
+        }
+
+
+        for (var disclosure in DISCLOSURE) {
+
+            var base = DISCLOSURE[disclosure];
+            var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
+            bs_op_add_monthly = bs_op_add_monthly.toFixed(2);
+            dis_meg = dis_meg.replace("[TOTAL INCLUDING OPTIONS AND ADDITIONS]", bs_op_add_monthly);
+            dis_meg = dis_meg.replace("[30DAYSFUTURE]", after_30_days);
+            dis_meg = dis_meg.replace("[60DAYSFUTURE]", after_60_days);
+
+            dis_meg = DISCLOSURE_MESSAGE_1 + dis_meg + DISCLOSURE_MESSAGE_3;
+
+            $("#popup-text").text(dis_meg);
+
+
+            break;
+
+
+
+
+
+
+
+        }
+
+
+
+    }
+
+
     $("#offer-btn").click(function () {
 
-        var text_area = $("#offer-text");
-        var OFFER_TEXT = text_area.text();
+        // var text_area = $("#offer-text");
+        //var OFFER_TEXT = OFFER;
         //var confirm_text = CONFIRM_TEXT;
         var name = $("#name-input").val();
         var phone = $("#phone-input").val();
@@ -356,21 +510,20 @@ $(document).ready(function (event) {
         offer_text = offer_text.replace('[@ZIPCODE', zipcode);
         offer_text = offer_text.replace('[@FORM_OUTPUT]', text_output);
         offer_text = offer_text.replace('[@DASH_USER_PHONE]', phone);
-
-        text_area.text(offer_text);
+        $("#popup-text").text(offer_text);
+        // text_area.text(offer_text);
         //need to be visible before copy
-        text_area.css('display', 'fixed');
+        //text_area.css('display', 'fixed');
 
-        text_area.select();
-        document.execCommand("copy");
+        //text_area.select();
+        // document.execCommand("copy");
 
         // text_area.css('display', 'none');
 
-        text_area.text(OFFER_TEXT);
-
-
-
+        // text_area.text(OFFER_TEXT);
         // displayOutput();
+        modal.style.display = "block";
+
 
     });
 
@@ -378,7 +531,7 @@ $(document).ready(function (event) {
     $("#confirmation-btn").click(function () {
         //alert('clicked');
         var text_area = $("#confirmation-text");
-        var CONFIRM_TEXT = text_area.text();
+        //  var CONFIRM_TEXT = CONFIRMATION;
         //var confirm_text = CONFIRM_TEXT;
         var name = $("#name-input").val();
         //var phone = $("#phone-input").val();
@@ -390,16 +543,18 @@ $(document).ready(function (event) {
 
         confirm_text = confirm_text.replace('[@WARRANTY]', warranty);
         confirm_text = confirm_text.replace('[@30DAYSFUTURE]', after_30_days);
+        $("#popup-text").text(confirm_text);
 
-        text_area.text(confirm_text);
+        //text_area.text(confirm_text);
+
+        modal.style.display = "block";
 
 
-
-        text_area.css('display', 'fixed');
-        text_area.select();
-        document.execCommand("copy");
+        //text_area.css('display', 'fixed');
+        //text_area.select();
+        //document.execCommand("copy");
         // text_area.css('display', 'none');
-        text_area.text(CONFIRM_TEXT);
+        //text_area.text(CONFIRM_TEXT);
 
 
 

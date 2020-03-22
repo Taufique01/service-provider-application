@@ -21,7 +21,7 @@
     <!-- Custom Theme Style -->
     <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
 
-    <link href="{% static '/css/custom/timezone.css' %}" rel="stylesheet">
+    <link href="{% static '/css/custom/calculator.css' %}" rel="stylesheet">
 
     <link href="{% static '/css/custom/nav.css' %}" rel="stylesheet">
 
@@ -458,6 +458,19 @@
         <!-- /footer content -->
 
     </div>
+
+    <!-- Trigger/Open The Modal -->
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div><span class="close">&times;</span><textarea id="popup-text">Hello this is pop up area</textarea> </div>
+
+        </div>
+
+    </div>
+
     <!-- jQuery -->
     <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap -->
@@ -470,7 +483,8 @@
     <!-- for table -->
     <script src="{% static '/vendors/datatables/js/jquery.dataTables.min.js' %}"></script>
 
-    <!--  Scripts to implement search-->
+    <!--  Scripts to implement calculator-->
+    <script src="{% static '/js/search/calculator_messages.js' %}"></script>
     <script src="{% static '/js/search/calculator.js' %}"></script>
 
 

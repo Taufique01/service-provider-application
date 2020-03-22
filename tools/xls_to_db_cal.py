@@ -25,19 +25,19 @@ for row in data['Cinch']:
 
     app=Appliance()
     app.calculator=cal
-    app.value=float(row[5])
+    app.value=float(row[2])
     app.text='Appliance 150'
     app.save()
   
     app=Appliance()
     app.calculator=cal
-    app.value=float(row[6])
+    app.value=float(row[3])
     app.text='Appliance 125'
     app.save()
 
     app=Appliance()
     app.calculator=cal
-    app.value=float(row[7])
+    app.value=float(row[4])
     app.text='Appliance 100'
     app.save()
 
@@ -46,19 +46,19 @@ for row in data['Cinch']:
 
     sys=System()
     sys.calculator=cal
-    sys.value=float(row[8])
+    sys.value=float(row[5])
     sys.text='System 150'
     sys.save()
   
     sys=System()
     sys.calculator=cal
-    sys.value=float(row[9])
+    sys.value=float(row[6])
     sys.text='System 125'
     sys.save()
 
     sys=System()
     sys.calculator=cal
-    sys.value=row[10]
+    sys.value=row[7]
     sys.text='System 100'
     sys.save()
 
