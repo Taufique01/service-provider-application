@@ -27,10 +27,10 @@ def style_display(value):
 @register.simple_tag
 def after_30_days():
    
-    date=datetime.date.today() + relativedelta(months=+1)
+    date=datetime.date.today() + relativedelta(days=30)
     return date.strftime('%d, %b %Y')
 
 @register.simple_tag
 def after_60_days():
-    date=datetime.date.today() + relativedelta(months=+2)
+    date=datetime.date.today() + relativedelta(days=60)
     return date.strftime('%d, %b %Y')

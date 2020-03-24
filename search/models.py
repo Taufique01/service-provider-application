@@ -151,8 +151,14 @@ class Discount(models.Model):
         return str(self.cost)+' yearly'
 
 
+from phone_field import PhoneField
+class Phone(models.Model):
+      '''phone number '''
+      user = models.OneToOneField(User, on_delete=models.CASCADE)
+      phone = PhoneField(blank=True, help_text='Contact phone number')
 
-
+      def __str__(self):
+        return self.user.username
 
 
 

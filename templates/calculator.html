@@ -1,6 +1,6 @@
 {% load static %}
 {% load calculator %}
-
+{% load phone %}
 <html lang="en" class=" ">
 
 <head>
@@ -79,7 +79,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="{% url 'calculator' %}"><i class="fa fa-arrows"></i> Calculator </a>
+                                    <a href="{% url 'calculator' %}"><i class="fa fa-calculator"></i> Calculator </a>
 
                                 </li>
 
@@ -163,7 +163,7 @@
                 <div class="row">
 
 
-                    <div class="col-6">
+                    <div class="col-4 col-sm-4">
 
                         <h2>Results for <span id="state">{{calculator}}</span>, Zip&nbsp;<span id="zipcode">{{zipcode}}</span></h2>
                         {% if calculator %}
@@ -238,7 +238,7 @@
                                 <div style="font-size: 17px">Additional</div>
 
                                 {% if calculator.surge_protect %}
-                                <div class="custom-control custom-checkbox">
+                                <div class="custom-control custom-checkbox w-75">
                                     <input id="surge-protect-chk" value="surge" type="checkbox" class="js-cal-inputs  custom-control-input">
                                     <label class="custom-control-label" for="surge-protect-chk">Surge Protect</label>
 
@@ -253,7 +253,7 @@
 
                                 {% if calculator.electronics_protect %}
 
-                                <div class="custom-control custom-checkbox">
+                                <div class="custom-control custom-checkbox w-75">
                                     <input id="electronics-protect-chk" value="electronics" type="checkbox" class="js-cal-inputs  custom-control-input">
                                     <label class="custom-control-label" for="electronics-protect-chk">Electronics Protect</label>
 
@@ -307,50 +307,49 @@
 
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-6 col-sm-7">
 
 
 
                         <div>
 
-                            <form class="row" method="post" action="{%  url 'calculator' %}">
+                            <form class="" method="post" action="{%  url 'calculator' %}">
+
                                 {% csrf_token %}
-                                <input type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State or Zip">
-                                <input type="submit" value="Search">
+                                <div class="form-row">
+                                    <div class="col-8">
+
+                                        <input class="form-control" type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State/Zip">
+                                    </div>
+                                    <div class="col-3">
+
+                                        <input class="btn btn-primary" type="submit" value="Search">
+                                    </div>
+                                </div>
                             </form>
 
 
+                            <div class="form-row">
+                                <div class="col-12 col-sm">
+                                    <input class="form-control" id="name-input" type="text" placeholder="Name">
 
-                            <div>
-                                <input id="name-input" type="text" placeholder="Name">
+                                </div>
+                                <div class="col-12 col-sm">
 
+                                    <input class="form-control" id="phone-input-next" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone|raw_phone}}">
+
+                                </div>
+                                <div class="col-12 col-sm">
+
+                                    <input class="form-control" id="warranty-input" type="text" name="warranty_no" placeholder="Warranty no">
+
+                                </div>
                             </div>
-                            <div>
-
-                                <input id="phone-input" type="tel" name="phone" placeholder="Phone">
-
-                            </div>
-                            <div>
-
-                                <input id="warranty-input" type="text" name="warranty_no" placeholder="Warranty no">
-
-                            </div>
-                            <div>
+                            <div class="">
 
                                 <input id="offer-btn" type="button" value="Offer">
                                 <input id="confirmation-btn" type="button" value="Confirmation">
                                 <input id="disclosure-btn" type="button" value="Disclosure">
-
-
-
-
-                            </div>
-                            <div>
-
-                                <textarea style="opacity: 0.02;height: 0;  position: absolute; overflow: hidden;z-index: -1" id="confirmation-text">{{calcmessage.confirmation}}</textarea>
-                                <textarea style="opacity: 0.02;height: 0;  position: absolute; overflow: hidden;z-index: -1" id="offer-text">{{calcmessage.offer}}</textarea>
-                                <textarea style="opacity: 0.02;height: 0;  position: absolute; overflow: hidden;z-index: -1" id="disclosure-text">{{calcmessage.disclosure}}</textarea>
-
                             </div>
 
 
@@ -359,35 +358,26 @@
 
                         <div style="display: {% style_display calculator %}">
 
-                            <div style="font-size: 18px">Output</div>
+                            <div style="font-size: 17px;font-weight: bold">Output</div>
                             <div style="font-size: 17px">Base</div>
-                            <div>
-                                <!-- <div> which: <span id="out-base-title"></span></div>-->
-                                <table class="table table-striped .table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th class="out-title" scope="col">#</th>
-                                            <th scope="col">monthly</th>
-                                            <th scope="col">yearly</th>
-                                            <th scope="col">yearly with discount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="out-base-plans">
 
-                                    </tbody>
-                                </table>
-                                <!-----older design-----------
-                                        <div id="out-base-plans">
+                            <!-- <div> which: <span id="out-base-title"></span></div>-->
+                            <table class="table table-striped table-responsive table-sm ">
+                                <thead>
+                                    <tr>
+                                        <th class="out-title" scope="col">#</th>
+                                        <th scope="col">monthly</th>
+                                        <th scope="col">yearly</th>
+                                        <th scope="col">yearly with discount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="out-base-plans">
 
-
-                                        </div>
-                                        <div> Yearly:<span id="out-base-total"></span>$ with discount</div>
-                                  -------------------->
-                            </div>
-
+                                </tbody>
+                            </table>
 
                             <div style="font-size: 17px">Base with Optional</div>
-                            <table class="table table-striped .table-responsive">
+                            <table class="table table-striped table-responsive table-sm">
                                 <thead>
                                     <tr>
                                         <th class="out-title" scope="col">#</th>
@@ -427,6 +417,7 @@
 
                 </div>
 
+                <div class="clearfix"></div>
 
 
 
@@ -458,18 +449,21 @@
         <!-- /footer content -->
 
     </div>
+    <!-- Hiddens contents -->
+    <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
+
 
     <!-- Trigger/Open The Modal -->
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
         <!-- Modal content -->
-        <div class="modal-content">
+        <div class=" modal-content">
             <div><span class="close">&times;</span><textarea id="popup-text">Hello this is pop up area</textarea> </div>
 
         </div>
 
-    </div>
+    </div>x
 
     <!-- jQuery -->
     <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>

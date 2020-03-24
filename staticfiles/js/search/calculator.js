@@ -297,7 +297,7 @@ function displayOutput() {
 
 
     text_output = "Base-\r\n" +
-        base_output_text + "Base with Options-\r\n" + base_options_output_text + "Additiona- \r\n" + "Surge Protect- " + surge_protect_output_html + "\r\n" + "Electronics Protect- " + electronics_protect_output_html + "\r\n" + "Line Protect-" + line_protect_output_html;
+        base_output_text + "Base with Options-\r\n" + base_options_output_text + "Additional- \r\n" + "Surge Protect- " + surge_protect_output_html + "\r\n" + "Electronics Protect- " + electronics_protect_output_html + "\r\n" + "Line Protect-" + line_protect_output_html;
     ///for disclosure message
     ADDITIONAL_TOTAL_MONTHLY = additional_total_monthly;
     OPTIONAL_TOTAL_MONTHLY = options_monthly;
@@ -507,7 +507,7 @@ $(document).ready(function (event) {
 
         var offer_text = OFFER_TEXT.replace('[@NAME]', name);
         offer_text = offer_text.replace('[@DASH_USER_NAME]', username);
-        offer_text = offer_text.replace('[@ZIPCODE', zipcode);
+        offer_text = offer_text.replace('[@ZIPCODE]', zipcode);
         offer_text = offer_text.replace('[@FORM_OUTPUT]', text_output);
         offer_text = offer_text.replace('[@DASH_USER_PHONE]', phone);
         $("#popup-text").text(offer_text);
