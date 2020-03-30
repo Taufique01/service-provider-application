@@ -14,3 +14,18 @@ OFFER_TEXT="Hello [@NAME]\r\nThis is [@DASH_USER_NAME], we spoke earlier regardi
 
 
 
+
+ACH_TEXT="Mr./Mrs. [FORM_NAME] Please be advised that this call is recorded for verification and quality assurance purposes.\r\n\r\nMr. /Mrs. [FORM_NAME] In connection with your CINCH Home Service Plan, you hereby authorize Cinch Home Services, Inc. and its affiliates and subsidiaries, collectively “Cinch”, to make withdrawals of funds from the account you will be providing me today in order to pay amounts due on the plan.\r\n\r\nYou understand that [FORM OUTPUT MONTHLY] withdrawals will automatically occur on [TODAY'S DATE]. If the applicable date is not a business day, the withdrawals will be made on the next business day.\r\n\r\nCinch may cancel this pre‐authorized funds transfer arrangement at any time, including without limitation in the event that there are not sufficient funds in the account to pay an authorized withdrawal. You will be provided with notice if Cinch cancels this arrangement.\r\n\r\nYou may cancel this arrangement at any time with notification to Cinch in writing or by calling us at [800-474-4047]. If Cinch does not receive notice of cancellation in sufficient time before the next scheduled withdrawal, the cancellation may not be implemented before the withdrawal occurs.\r\n\r\nThis Pre-Authorized Funds Transfer arrangement made today [TODAY'S DATE] does not modify the terms of the CINCH Home Service Plan.\r\n\r\nMr./Mrs. [FORM_NAME] with the understanding of the billing terms I have read to you, do I have your authorization to proceed?";
+
+
+
+CC_TEXT="Mr./Mrs. [FORM_NAME] Please be advised that this call is recorded for verification and quality assurance purposes.\r\n\r\nMr./Mrs. [FORM_NAME] In connection with your CINCH Home Service Plan, you hereby authorize Cinch Home Services, Inc. and its affiliates and subsidiaries, collectively “Cinch”, to charge your credit card, from the account you will be providing me today in order to pay amounts due on the plan.\r\n\r\nYou understand that the charge of [FORM OUTPUT MONTHLY] will occur automatically on [TODAY'S DATE]. If the applicable date is not a business day, the charges will be made on the next business day.\r\n\r\nCinch may cancel this pre-authorized charge arrangement at any time, including without limitation in the event that a charge attempt is returned/declined to pay an authorized charge. You will be provided with notice if Cinch cancels this arrangement.\r\n\r\nYou may cancel this arrangement at any time with notification to Cinch of the desire to cancel this arrangement in writing or by calling us at [800-474-4047]. If Cinch does not receive notice of cancellation in sufficient time before the next scheduled charge, the cancellation may not be implemented before the charge occurs.\r\n\r\nThis Pre-authorized charge arrangement made today [TODAY'S DATE] does not modify the terms of the CINCH Home Service Plan.\r\n\r\nMr./Mrs. [FORM_NAME] with the understanding of the billing terms I have read to you, do I have your authorization to proceed?";
+
+
+
+
+
+
+
+
+

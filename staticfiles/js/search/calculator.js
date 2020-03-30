@@ -147,8 +147,6 @@ function displayOutput() {
                 DISCLOSURE[tag] = parseFloat(appl_plan.val());
 
                 var base_monthly = parseFloat(appl_plan.val());
-                ///base_monthly cost after applying tax
-                //base_monthly = applyTax(base_monthly, tax);
                 ///base output
                 base_output_html = base_output_html + baseOutputHtml_row(base_monthly, discount2, tag)["row_html"];
                 base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
@@ -440,6 +438,202 @@ $(document).ready(function (event) {
 
     });
 
+
+
+
+    $("#note-btn").click(function () {
+        var sales_details_row = "SALES DETAILS: ";
+        var action_taken_row = "ACTION TAKEN : ";
+
+
+        for (var disclosure in DISCLOSURE) {
+
+            var base_tag = disclosure;
+
+            var base = DISCLOSURE[disclosure];
+            var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
+
+            bs_op_add_monthly = applyTax(bs_op_add_monthly);
+            break;
+        }
+
+        ///collect the discount datas
+        if ($("#discount2-chk").prop("checked")) {
+            var discount2 = parseFloat($("#discount2-chk").val());
+        } else {
+            var discount2 = 0;
+        }
+        ///discount month free
+        if ($("#discount1-chk").prop("checked")) {
+            MONTHS_IN_A_YEAR_WITH_DIS = ONE_MONTH_FREE_IN_YEAR;
+        } else {
+            MONTHS_IN_A_YEAR_WITH_DIS = MONTHS_IN_A_YEAR;
+
+
+        }
+
+
+
+        if ($("#pay-monthly").prop("checked")) {
+            var monthly_or_yearly_row = "MONTHLY : " + bs_op_add_monthly.toFixed(2);
+        } else if ($("#pay-yearly").prop("checked")) {
+
+            var monthly_or_yearly_row = "YEARLY : " + yearlyAfterDiscount(bs_op_add_monthly, discount2).toFixed(2);
+
+        } else {
+
+            var monthly_or_yearly_row = "";
+        }
+
+
+        if ($("#pay-ach").prop("checked")) {
+
+            var pay_details = $("#pay-ach").val();
+        } else if ($("#pay-cc").prop("checked")) {
+
+
+            var pay_details = $("#pay-cc").val();
+
+        } else if ($("#pay-invoice").prop("checked")) {
+            var pay_details = $("#pay-invoice").val();
+
+        } else {
+
+            var pay_details = "";
+        }
+
+        var pay_details_row = "BILLED TO: " + pay_details;
+
+
+
+        // var advise_out_row = "";
+        var advises = $(".js-advice-inputs");
+
+        for (var i = 0; i < advises.length; i++) {
+            var advise = $(advises[i]).val();
+
+            //    advise_out_row = advise_out_row + ', ' + advise;
+
+            action_taken_row = action_taken_row + 'Advised of: ' + advise + '...';
+        }
+
+
+        if ($("#action-chk-0").prop("checked")) {
+            ///OK@2E
+
+            sales_details_row = sales_details_row + $("#action-chk-0").val();
+            action_taken_row = action_taken_row + '...' + $("#action-chk-0").val();
+
+
+
+        }
+
+        var cob = "cob: ";
+
+
+        if ($("#action-chk-1").prop("checked")) {
+            //registered online account
+            cob = cob + $("#action-chk-1").val();
+            action_taken_row = action_taken_row + '...' + $("#action-chk-1").val();
+
+        }
+
+        if ($("#action-chk-2").prop("checked")) {
+            //Refused options and additions
+            cob = cob + '...' + $("#action-chk-2").val();
+            action_taken_row = action_taken_row + '...' + $("#action-chk-2").val();
+
+        }
+
+        if ($("#action-chk-3").prop("checked")) {
+            //Sent email confirmation
+            cob = cob + '...' + $("#action-chk-3").val();
+            action_taken_row = action_taken_row + '...' + $("#action-chk-3").val();
+
+        }
+        var warranty = 'warranty #' + $("#warranty-input").val();
+
+
+        sales_details_row = sales_details_row + '...' + 'enrolled in cinch  ' + base_tag + ' ded...' + warranty + '...' + cob;
+
+
+
+        var sales_scripting_row = "SALES SCRIPTING COMPLETED: ";
+
+        if ($("#action-chk-4").prop("checked")) {
+
+            ///sales scripting completed
+            sales_scripting_row = sales_scripting_row + 'YES';
+        } else {
+            sales_scripting_row = sales_scripting_row + 'NO';
+        }
+
+
+        var billing_script_row = 'CC/ACH SCRIPTING COMPLETED: '
+        if ($("#action-chk-5").prop("checked")) {
+
+            ///billing scripting completed
+            billing_script_row = billing_script_row + 'YES';
+        } else {
+            billing_script_row = billing_script_row + 'NO';
+        }
+
+        var rod_row = "ROD: ";
+
+        if ($("#action-chk-6").prop("checked")) {
+
+            ///sales scripting completed
+            rod_row = rod_row + 'YES';
+        } else {
+            rod_row = rod_row + 'NO';
+        }
+
+        var name = $("#name-input").val();
+        var phone = $("#phone-input-cus").val();
+
+        var caller_row = "CALLER: " + "Name: " + name + ", Phone: " + phone;
+
+
+        var call_reason_row = "REASON FOR CALL: ";
+        if ($("#call-reason-enroll").prop("checked")) {
+            call_reason_row = call_reason_row + $("#call-reason-enroll").val();
+
+        } else if ($("#call-reason-productenq").prop("checked")) {
+            call_reason_row = call_reason_row + $("#call-reason-productenq").val();
+
+
+        } else if ($("#call-reason-other").prop("checked")) {
+            call_reason_row = call_reason_row + $("#call-reason-other").val();
+
+        }
+
+
+        var reason_det_row = "REASON DETAILS: " + "Customer interested in Cinch " + base_tag.substr(0, base_tag.length - 3) + " Warranty";
+
+
+        var new_line = '\r\n';
+        var note_output = caller_row + '\r\n' + call_reason_row + '\r\n' + reason_det_row + '\r\n' + action_taken_row + '\r\n' + sales_details_row + '\r\n' + pay_details_row + '\r\n' + monthly_or_yearly_row + '\r\n' + sales_scripting_row + '\r\n' + rod_row + '\r\n' + billing_script_row + '\r\n';
+
+
+        $(".hidden-copy-text").text(note_output);
+        $(".hidden-copy-text").select();
+        document.execCommand('copy');
+
+
+
+        $(this).tooltip('show');
+
+
+
+    });
+
+    $("#note-btn").mousemove(function () {
+        $(this).tooltip('hide');
+
+
+
+    });
+
     function disclosureMessage() {
 
         var after_30_days = $("#after-30-days").text();
@@ -511,17 +705,7 @@ $(document).ready(function (event) {
         offer_text = offer_text.replace('[@FORM_OUTPUT]', text_output);
         offer_text = offer_text.replace('[@DASH_USER_PHONE]', phone);
         $("#popup-text").text(offer_text);
-        // text_area.text(offer_text);
-        //need to be visible before copy
-        //text_area.css('display', 'fixed');
 
-        //text_area.select();
-        // document.execCommand("copy");
-
-        // text_area.css('display', 'none');
-
-        // text_area.text(OFFER_TEXT);
-        // displayOutput();
         modal.style.display = "block";
 
 
@@ -530,7 +714,7 @@ $(document).ready(function (event) {
 
     $("#confirmation-btn").click(function () {
         //alert('clicked');
-        var text_area = $("#confirmation-text");
+        //var text_area = $("#confirmation-text");
         //  var CONFIRM_TEXT = CONFIRMATION;
         //var confirm_text = CONFIRM_TEXT;
         var name = $("#name-input").val();
@@ -544,23 +728,93 @@ $(document).ready(function (event) {
         confirm_text = confirm_text.replace('[@WARRANTY]', warranty);
         confirm_text = confirm_text.replace('[@30DAYSFUTURE]', after_30_days);
         $("#popup-text").text(confirm_text);
+        modal.style.display = "block";
 
-        //text_area.text(confirm_text);
+    });
 
+
+    $("#btn-ach").click(function () {
+
+        var name = $("#name-input").val();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
+        for (var disclosure in DISCLOSURE) {
+
+            var base_tag = disclosure;
+
+            var base = DISCLOSURE[disclosure];
+            var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
+
+            bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
+            break;
+        }
+
+
+        var ach_text = ACH_TEXT.replace('[FORM_NAME]', name);
+        ach_text = ach_text.replace('[FORM_NAME]', name);
+        ach_text = ach_text.replace('[FORM_NAME]', name);
+        ach_text = ach_text.replace("[TODAY'S DATE]", today);
+        ach_text = ach_text.replace("[TODAY'S DATE]", today);
+
+
+        ach_text = ach_text.replace("[FORM OUTPUT MONTHLY]", bs_op_add_monthly);
+
+
+
+
+        $("#popup-text").text(ach_text);
         modal.style.display = "block";
 
 
-        //text_area.css('display', 'fixed');
-        //text_area.select();
-        //document.execCommand("copy");
-        // text_area.css('display', 'none');
-        //text_area.text(CONFIRM_TEXT);
+    });
+
+    $("#btn-cc").click(function () {
+
+        var name = $("#name-input").val();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
+        for (var disclosure in DISCLOSURE) {
+
+            var base_tag = disclosure;
+
+            var base = DISCLOSURE[disclosure];
+            var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
+
+            bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
+            break;
+        }
+
+
+        var cc_text = CC_TEXT.replace('[FORM_NAME]',
+            name);
+        cc_text = cc_text.replace('[FORM_NAME]',
+            name);
+        cc_text = cc_text.replace('[FORM_NAME]',
+            name);
+        cc_text = cc_text.replace("[TODAY'S DATE]", today);
+
+        cc_text = cc_text.replace("[TODAY'S DATE]", today);
+
+        cc_text = cc_text.replace('[FORM OUTPUT MONTHLY]', bs_op_add_monthly);
 
 
 
 
 
-        // displayOutput();
+
+        $("#popup-text").text(cc_text);
+        modal.style.display = "block";
+
 
     });
 

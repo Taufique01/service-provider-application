@@ -49,7 +49,7 @@
 
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2 id="username"> {{ request.user.username }}</h2>
+                            <h2> {{ request.user.username }}</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -122,6 +122,7 @@
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                                     {{ request.user.username }}
                                 </a>
+
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="javascript:;"> Profile</a>
                                     <a class="dropdown-item" href="javascript:;">
@@ -162,9 +163,25 @@
                 <div class="row">
 
 
-                    <div class="col-4 col-sm-4">
+                    <div class="col-12 col-sm-6 col-md-4">
 
-                        <h2>Results for <span id="state">{{calculator}}</span>, Zip&nbsp;<span id="zipcode">{{zipcode}}</span></h2>
+                        <form class="" method="post" action="{%  url 'calculator' %}">
+
+                            {% csrf_token %}
+                            <div class="input-group">
+
+
+                                <input class="form-control" type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State/Zip">
+
+                                <div class="input-group-append">
+
+                                    <input class="btn btn-primary" type="submit" value="Search">
+                                </div>
+                            </div>
+                        </form>
+
+                        <div style="font-size: 17px; margin-top: -20px">Results for <span id="state">{{calculator}}</span>, Zip&nbsp;<span id="zipcode">{{zipcode}}</span></div>
+
                         {% if calculator %}
                         <form id="calculator-left-form" method="get" action="#">
 
@@ -300,60 +317,170 @@
 
                         </form>
 
-                        <div>30 days from now:<span id="after-30-days">{% after_30_days %}</span></div>
+                        <div style="margin-top: -10px">30 days from now:<span id="after-30-days">{% after_30_days %}</span></div>
                         <div>60 days from now:<span id="after-60-days">{% after_60_days %}</span></div>
                         {% endif %}
 
                     </div>
+                    {% if calculator %}
+                    <div class="col-12 col-sm-6 col-md-4">
 
-                    <div class="col-6 col-sm-7">
 
 
+                        <div class="form-row">
+                            <div class="col-12">
+                                <input class="form-control form-control-sm" id="name-input" type="text" placeholder="Name">
+
+                            </div>
+                            <div class="col-12">
+
+                                <input class="form-control form-control-sm" id="phone-input-cus" type="text" name="myphone2" placeholder="Phone">
+
+                            </div>
+                            <div class="col-12">
+
+                                <input class="form-control form-control-sm" id="warranty-input" type="text" name="warranty_no" placeholder="Warranty no">
+
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+
+                            <input class="btn  btn-info" id="offer-btn" type="button" value="Offer">
+                            <input class="btn btn-info" id="confirmation-btn" type="button" value="Confirmation">
+                            <input class="btn btn-info" id="disclosure-btn" type="button" value="Disclosure">
+                        </div>
 
                         <div>
 
-                            <form class="" method="post" action="{%  url 'calculator' %}">
-
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="col-8">
-
-                                        <input class="form-control" type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State/Zip">
-                                    </div>
-                                    <div class="col-3">
-
-                                        <input class="btn btn-primary" type="submit" value="Search">
-                                    </div>
-                                </div>
-                            </form>
-
-
-                            <div class="form-row">
-                                <div class="col-12 col-sm">
-                                    <input class="form-control" id="name-input" type="text" placeholder="Name">
-
-                                </div>
-                                <div class="col-12 col-sm">
-
-                                    <input class="form-control" id="phone-input-next" type="tel" name="myphone" placeholder="Phone">
-
-                                </div>
-                                <div class="col-12 col-sm">
-
-                                    <input class="form-control" id="warranty-input" type="text" name="warranty_no" placeholder="Warranty no">
-
-                                </div>
+                            <div style="font-size: 17px">Call Reason</div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="enrollment" type="radio" class="js-callreason-inputs custom-control-input" id="call-reason-enroll" name="callreason">
+                                <label class="custom-control-label" for="call-reason-enroll">Enrollment</label>
                             </div>
-                            <div class="">
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="Product_enquiry" type="radio" class="js-callreason-inputs custom-control-input" id="call-reason-productenq" name="callreason">
+                                <label class="custom-control-label" for="call-reason-productenq">Product enquiry</label>
+                            </div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="Other" type="radio" class="js-callreason-inputs custom-control-input" id="call-reason-other" name="callreason">
+                                <label class="custom-control-label" for="call-reason-other">Other</label>
+                            </div>
+                        </div>
 
-                                <input id="offer-btn" type="button" value="Offer">
-                                <input id="confirmation-btn" type="button" value="Confirmation">
-                                <input id="disclosure-btn" type="button" value="Disclosure">
+                        <div>
+                            <div style="font-size: 17px">Advised</div>
+
+
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-1" value="Benifits of warranty">
+                                <label class="custom-control-label" for="advice-chk-1">Benifits of warranty</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-2" value="Options and additions">
+                                <label class="custom-control-label" for="advice-chk-2">Options and additions</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-3" value="Waiting period">
+                                <label class="custom-control-label" for="advice-chk-3">Waiting period</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-4" value="Mech/malf due to NWAT">
+                                <label class="custom-control-label" for="advice-chk-4">Mech/malf due to NWAT</label>
                             </div>
 
 
 
                         </div>
+
+                        <div>
+                            <div style="font-size: 17px">Payment</div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="ACH" type="radio" class="js-pay-inputs custom-control-input" id="pay-ach" name="paydetails">
+                                <label class="custom-control-label" for="pay-ach">ACH</label>
+                            </div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="CC" type="radio" class="js-pay-inputs custom-control-input" id="pay-cc" name="paydetails">
+                                <label class="custom-control-label" for="pay-cc">CC</label>
+                            </div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="INVOICE" type="radio" class="js-pay-inputs custom-control-input" id="pay-invoice" name="paydetails">
+                                <label class="custom-control-label" for="pay-invoice">INVOICE</label>
+                            </div>
+                        </div>
+                        <div>
+
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="Monthly" type="radio" class="js-pay-my custom-control-input" id="pay-monthly" name="pay_my">
+                                <label class="custom-control-label" for="pay-monthly">Monthly</label>
+                            </div>
+                            <!-- Default inline 1-->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input value="Yearly" type="radio" class="js-pay-my custom-control-input" id="pay-yearly" name="pay_my">
+                                <label class="custom-control-label" for="pay-yearly">Yearly</label>
+                            </div>
+
+                        </div>
+
+
+                        <div>
+                            <div style="font-size: 17px">Action Taken</div>
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-0" value="Okay to enroll">
+                                <label class="custom-control-label" for="action-chk-0">OK2E</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-1" value="Registered online account">
+                                <label class="custom-control-label" for="action-chk-1">Registered online account</label>
+                            </div>
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-2" value="Refused options and additions">
+                                <label class="custom-control-label" for="action-chk-2">Refused options and additions</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-3" value="Sent email confirmation">
+                                <label class="custom-control-label" for="action-chk-3">Sent email confirmation</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-4" value="Sales Scripting completed">
+                                <label class="custom-control-label" for="action-chk-4">Sales Scripting completed</label>
+                            </div>
+
+
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-5" value="Billing scripted completed">
+                                <label class="custom-control-label" for="action-chk-5">Billing scripted completed</label>
+                            </div>
+
+
+                            <div class="custom-control custom-checkbox custom-control">
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-6" value="ROD">
+                                <label class="custom-control-label" for="action-chk-6">ROD</label>
+                            </div>
+                        </div>
+
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn  btn-info" id="note-btn" type="button" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="output copied"><i class="fa fa-sticky-note-o" aria-hidden="true">&nbsp;</i>Note</button>
+                            <button id="btn-ach" class="btn  btn-info">ACH</button>
+                            <button id="btn-cc" class="btn  btn-info">CC</button>
+
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="col-12 col-sm-12 col-md-4">
 
                         <div style="display: {% style_display calculator %}">
 
@@ -389,12 +516,7 @@
 
                                 </tbody>
                             </table>
-                            <!-- older design -----------
-                            <div>
-                                <div>Total:<span id="base-option-output"></span></div>
-                                <div>Total:<span id="base-option-output-dis"></span><span>$&nbsp;yearly with discount</span></div>
-                            </div>
-                            ----------------------->
+
 
                             <div style="font-size: 17px">Additional</div>
                             <div>
@@ -412,6 +534,7 @@
 
 
                     </div>
+
 
 
                 </div>
@@ -450,7 +573,9 @@
     </div>
     <!-- Hiddens contents -->
     <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
+    <div id="username" style="display: none">{{request.user.get_full_name}}</div>
 
+    <textarea class="hidden-copy-text"></textarea>
 
     <!-- Trigger/Open The Modal -->
     <!-- The Modal -->
@@ -478,6 +603,8 @@
 
     <!--  Scripts to implement calculator-->
     <script src="{% static '/js/search/calculator_messages.js' %}"></script>
+
+
     <script src="{% static '/js/search/calculator.js' %}"></script>
 
 
