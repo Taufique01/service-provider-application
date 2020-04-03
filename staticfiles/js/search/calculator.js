@@ -160,8 +160,9 @@ function displayOutput() {
                 if (options_monthly > 0) {
 
                     base_options_output_html = base_options_output_html + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_html"];
-                    base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
+
                 }
+                base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
 
             }
 
@@ -198,8 +199,9 @@ function displayOutput() {
 
 
                     base_options_output_html = base_options_output_html + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_html"];
-                    base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
+
                 }
+                base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
             }
         }
 
@@ -232,8 +234,9 @@ function displayOutput() {
                 if (options_monthly > 0) {
 
                     base_options_output_html = base_options_output_html + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_html"];
-                    base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
+
                 }
+                base_options_output_text = base_options_output_text + baseOutputHtml_row(base_options_monthly, discount2, tag)["row_text"];
             }
         }
 
