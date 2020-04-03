@@ -26,19 +26,19 @@ for row in data['Cinch']:
     app=Appliance()
     app.calculator=cal
     app.value=float(row[2])
-    app.text='Appliance 150'
+    app.text='$150 ded'
     app.save()
   
     app=Appliance()
     app.calculator=cal
     app.value=float(row[3])
-    app.text='Appliance 125'
+    app.text='$125 ded'
     app.save()
 
     app=Appliance()
     app.calculator=cal
     app.value=float(row[4])
-    app.text='Appliance 100'
+    app.text='$100 ded'
     app.save()
 
 
@@ -47,38 +47,38 @@ for row in data['Cinch']:
     sys=System()
     sys.calculator=cal
     sys.value=float(row[5])
-    sys.text='System 150'
+    sys.text='$150 ded'
     sys.save()
   
     sys=System()
     sys.calculator=cal
     sys.value=float(row[6])
-    sys.text='System 125'
+    sys.text='$125 ded'
     sys.save()
 
     sys=System()
     sys.calculator=cal
     sys.value=row[7]
-    sys.text='System 100'
+    sys.text='$100 ded'
     sys.save()
 
 
     wh=WholeHome()
     wh.calculator=cal
     wh.value=float(row[8])
-    wh.text='WholeHome 150'
+    wh.text='$150 ded'
     wh.save()
   
     wh=WholeHome()
     wh.calculator=cal
     wh.value=float(row[9])
-    wh.text='WholeHome 125'
+    wh.text='$125 ded'
     wh.save()
 
     wh=WholeHome()
     wh.calculator=cal
     wh.value=float(row[10])
-    wh.text='WholeHome 100'
+    wh.text='$100 ded'
     wh.save()
 
     if row_count>=unit_progress:

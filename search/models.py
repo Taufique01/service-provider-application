@@ -148,7 +148,7 @@ class Discount(models.Model):
       '''per month '''
       cost=models.FloatField(default=100)
       def __str__(self):
-        return str(self.cost)+' yearly'
+        return '$'+ str(self.cost)+' '+ 'Off Annual Premium'
 
 
 from phone_field import PhoneField

@@ -171,7 +171,7 @@
                             <div class="input-group">
 
 
-                                <input class="form-control" type="text" name="state_name" value="{{calculator.state}}" placeholder="Enter State/Zip">
+                                <input class="form-control" type="text" name="state_name" value="" placeholder="Enter State/Zip">
 
                                 <div class="input-group-append">
 
@@ -180,7 +180,7 @@
                             </div>
                         </form>
 
-                        <div style="font-size: 17px; margin-top: -20px">Results for <span id="state">{{calculator}}</span>, Zip&nbsp;<span id="zipcode">{{zipcode}}</span></div>
+                        <div style="font-size: 17px; margin-top: -20px">State:&nbsp; <span id="state">{{calculator}},</span>&nbsp;{{place}}</div>
 
                         {% if calculator %}
                         <form id="calculator-left-form" method="get" action="#">
@@ -201,8 +201,7 @@
 
                                 <!-- Default inline 3-->
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input value="Whole Home" type="radio" class="js-cal-inputs  custom-control-input" id="radio-wh" name="app_sys_wh">
-                                    <label class="custom-control-label" for="radio-wh">Whole Home</label>
+                                    <input value="Whole Home" type="radio" class="js-cal-inputs  custom-control-input" id="radio-wh" name="app_sys_wh"><label class="custom-control-label" for="radio-wh">Complete Home</label>
                                 </div>
 
                             </div>
@@ -246,7 +245,7 @@
                                 {% for optional in optionals %}
                                 <!-- Default unchecked -->
                                 <div class="custom-control custom-checkbox">
-                                    <input id="addi{{optional.id}}" value="{{optional.cost}}" type="checkbox" class="js-cal-inputs js-optional-check custom-control-input">
+                                    <input id="addi{{optional.id}}" value="{{optional.cost}}" type="checkbox" class="js-cal-inputs js-optional-check custom-control-input" data-optname="{{optional.text}}">
                                     <label class="custom-control-label" for="addi{{optional.id}}">{{optional.text}}</label>
                                 </div>
                                 {% endfor %}
@@ -292,7 +291,7 @@
 
                             <div class="custom-control custom-checkbox">
                                 <input id="line-protect-chk" value="{{line_protect.cost}}" type="checkbox" class="js-cal-inputs  custom-control-input">
-                                <label class="custom-control-label" for="line-protect-chk">Line Protect {{line_protect.cost}}$</label>
+                                <label class="custom-control-label" for="line-protect-chk">Line Protect ${{line_protect.cost}}</label>
                             </div>
 
                             {% endif %}
@@ -301,14 +300,14 @@
                             <div style="font-size: 17px">Discount</div>
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <input class="js-cal-inputs  custom-control-input" type="checkbox" id="discount1-chk" value="0">
-                                <label class="custom-control-label" for="discount1-chk">Month Free</label>
+                                <label class="custom-control-label" for="discount1-chk">1st Month Free</label>
                             </div>
 
                             <div class="custom-control custom-checkbox custom-control-inline">
                                 <!-- discount2 taken from server -->
 
-                                <input class="js-cal-inputs  custom-control-input" type="checkbox" id="discount2-chk" value="{{discount}}">
-                                <label class="custom-control-label" for="discount2-chk">{{discount}}$ Off</label>
+                                <input class="js-cal-inputs  custom-control-input" type="checkbox" id="discount2-chk" value="{{discount.cost}}">
+                                <label class="custom-control-label" for="discount2-chk">{{discount}} </label>
                             </div>
 
                             <input id="tax-in" type="text" value={{calculator.tax}} style="display: none">
@@ -317,8 +316,8 @@
 
                         </form>
 
-                        <div style="margin-top: -10px">30 days from now:<span id="after-30-days">{% after_30_days %}</span></div>
-                        <div>60 days from now:<span id="after-60-days">{% after_60_days %}</span></div>
+                        <div style="margin-top: -10px">30 days from now:&nbsp;<span id="after-30-days">{% after_30_days %}</span></div>
+                        <div>60 days from now:&nbsp;<span id="after-60-days">{% after_60_days %}</span></div>
                         {% endif %}
 
                     </div>
@@ -377,7 +376,7 @@
 
                             <div class="custom-control custom-checkbox custom-control">
                                 <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-1" value="Benifits of warranty">
-                                <label class="custom-control-label" for="advice-chk-1">Benifits of warranty</label>
+                                <label class="custom-control-label" for="advice-chk-1">Benefits of warranty</label>
                             </div>
                             <div class="custom-control custom-checkbox custom-control">
                                 <input class="js-advice-inputs  custom-control-input" type="checkbox" id="advice-chk-2" value="Options and additions">
@@ -453,15 +452,15 @@
                             </div>
 
                             <div class="custom-control custom-checkbox custom-control">
-                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-4" value="Sales Scripting completed">
-                                <label class="custom-control-label" for="action-chk-4">Sales Scripting completed</label>
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-4" value="Sales scripting completed">
+                                <label class="custom-control-label" for="action-chk-4">Sales scripting completed</label>
                             </div>
 
 
 
                             <div class="custom-control custom-checkbox custom-control">
-                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-5" value="Billing scripted completed">
-                                <label class="custom-control-label" for="action-chk-5">Billing scripted completed</label>
+                                <input class="js-action-inputs  custom-control-input" type="checkbox" id="action-chk-5" value="Billing scripting completed">
+                                <label class="custom-control-label" for="action-chk-5">Billing scripting completed</label>
                             </div>
 
 
@@ -574,7 +573,7 @@
     <!-- Hiddens contents -->
     <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
     <div id="username" style="display: none">{{request.user.get_full_name}}</div>
-
+    <span style="display: none" id="zipcode">{{zipcode}}</span>
     <textarea class="hidden-copy-text"></textarea>
 
     <!-- Trigger/Open The Modal -->

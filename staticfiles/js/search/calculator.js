@@ -1,6 +1,6 @@
 var APPLIANCE = 'Appliance';
 var SYSTEM = 'System';
-var WHOLE_HOME = 'Whole Home';
+var WHOLE_HOME = 'Complete Home';
 var NOT_APPLICABLE = 'N/A';
 
 var MONTHS_IN_A_YEAR = 12;
@@ -14,7 +14,7 @@ var text_output = "";
 var DISCLOSURE = {};
 var ADDITIONAL_TOTAL_MONTHLY = 0;
 var OPTIONAL_TOTAL_MONTHLY = 0;
-
+var BASE_TITLE;
 
 
 function applyTax(input) {
@@ -36,14 +36,14 @@ function buildTableRowHTML(tag, monthly, discount2) {
     var row_text;
     var row_html;
     if (discount2 == 0 && MONTHS_IN_A_YEAR_WITH_DIS == MONTHS_IN_A_YEAR) {
-        row_html = '<tr>' + '<td>' + tag + '</td>' + '<td>' + monthly + '$' + '</td>' + '<td>' + yearly + '$' + '</td>' + '<td>' + NOT_APPLICABLE + '</tr>';
-        row_text = "" + tag + "- " + monthly + "$ monthly" + ", " + yearly + "$ yearly" + "\r\n";
+        row_html = '<tr>' + '<td>' + tag + '</td>' + '<td>' + '$' + monthly + '</td>' + '<td>' + '$' + yearly + '</td>' + '<td>' + NOT_APPLICABLE + '</tr>';
+        row_text = "" + tag + "- " + "$" + monthly + " monthly" + ", " + "$" + yearly + " yearly" + "\r\n";
 
 
     } else {
 
-        row_html = '<tr>' + '<td>' + tag + '</td>' + '<td>' + monthly + '$' + '</td>' + '<td>' + yearly + '$' + '</td>' + '<td>' + yearly_after_dis + '$' + '</td>' + '</tr>';
-        row_text = "" + tag + "- " + monthly + "$ monthly" + ", " + yearly + "$ yearly" + ", " + yearly_after_dis + "$ yearly(with discount)" + "\r\n";
+        row_html = '<tr>' + '<td>' + tag + '</td>' + '<td>' + '$' + monthly + '</td>' + '<td>' + '$' + yearly + '</td>' + '<td>' + '$' + yearly_after_dis + '</td>' + '</tr>';
+        row_text = "" + tag + "- " + "$" + monthly + " monthly" + ", " + "$" + yearly + " yearly" + ", " + "$" + yearly_after_dis + " yearly(with discount)" + "\r\n";
     }
     return {
         row_html: row_html,
@@ -91,19 +91,21 @@ function displayOutput() {
     //disclosure message empty every time
     DISCLOSURE = {};
 
+    var discount_list = "";
     ///collect the discount datas
     if ($("#discount2-chk").prop("checked")) {
         var discount2 = parseFloat($("#discount2-chk").val());
+        discount_list = discount_list + "$100.0 Off Annual Premium,";
     } else {
+
         var discount2 = 0;
     }
     ///discount month free
     if ($("#discount1-chk").prop("checked")) {
         MONTHS_IN_A_YEAR_WITH_DIS = ONE_MONTH_FREE_IN_YEAR;
+        discount_list = discount_list + "1st Month Free";
     } else {
         MONTHS_IN_A_YEAR_WITH_DIS = MONTHS_IN_A_YEAR;
-
-
     }
 
 
@@ -112,12 +114,14 @@ function displayOutput() {
 
     /////get the Optionals values
     var options_yearly = 0;
-    var opt_checks = $(".js-optional-check");
+    var optons_list = "";
 
+    var opt_checks = $(".js-optional-check");
     for (var i = 0; i < opt_checks.length; i++) {
         var opt_check = $(opt_checks[i]);
         if (opt_check.prop("checked")) {
             options_yearly = options_yearly + parseFloat(opt_check.val());
+            optons_list = optons_list + opt_check.data("optname") + ", ";
         }
 
     }
@@ -149,7 +153,7 @@ function displayOutput() {
                 var base_monthly = parseFloat(appl_plan.val());
                 ///base output
                 base_output_html = base_output_html + baseOutputHtml_row(base_monthly, discount2, tag)["row_html"];
-                base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
+                // base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
                 //the base_options cost is monthly
                 var base_options_monthly = options_monthly + base_monthly;
                 ///base option output
@@ -186,7 +190,7 @@ function displayOutput() {
                 // base_monthly = applyTax(base_monthly, tax);
                 ///base output
                 base_output_html = base_output_html + baseOutputHtml_row(base_monthly, discount2, tag)["row_html"];
-                base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
+                // base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
                 //the base_options cost is monthly
                 var base_options_monthly = options_monthly + base_monthly;
                 ///base option output
@@ -221,7 +225,7 @@ function displayOutput() {
                 //  base_monthly = applyTax(base_monthly, tax);
                 ///base output
                 base_output_html = base_output_html + baseOutputHtml_row(base_monthly, discount2, tag)["row_html"];
-                base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
+                // base_output_text = base_output_text + baseOutputHtml_row(base_monthly, discount2, tag)["row_text"];
                 //the base_options cost is monthly
                 var base_options_monthly = options_monthly + base_monthly;
                 ///base option output
@@ -246,7 +250,7 @@ function displayOutput() {
         var surge_protect = $("#surge-protect-select").children("option:selected").val();
         surge_protect = applyTax(parseFloat(surge_protect));
         additional_total_monthly = additional_total_monthly + surge_protect;
-        var surge_protect_output_html = surge_protect.toFixed(2) + "$/month" + ', ' + (surge_protect * 12).toFixed(2) + "$/year";
+        var surge_protect_output_html = "$" + surge_protect.toFixed(2) + "/month" + ', ' + "$" + (surge_protect * 12).toFixed(2) + "/year";
 
     } else {
 
@@ -257,7 +261,7 @@ function displayOutput() {
         var electronics_protect = $("#electronics-protect-select").children("option:selected").val();
         electronics_protect = applyTax(parseFloat(electronics_protect));
         additional_total_monthly = additional_total_monthly + electronics_protect;
-        var electronics_protect_output_html = electronics_protect.toFixed(2) + "$/month" + ', ' + (electronics_protect * 12).toFixed(2) + "$/year";
+        var electronics_protect_output_html = "$" + electronics_protect.toFixed(2) + "/month" + ', ' + "$" + (electronics_protect * 12).toFixed(2) + "/year";
 
     } else {
 
@@ -270,7 +274,7 @@ function displayOutput() {
         var line_protect = $("#line-protect-chk").val();
         line_protect = applyTax(parseFloat(line_protect));
         additional_total_monthly = additional_total_monthly + line_protect;
-        var line_protect_output_html = line_protect.toFixed(2) + "$/month" + ', ' + (line_protect * 12).toFixed(2) + "$/year";
+        var line_protect_output_html = "$" + line_protect.toFixed(2) + "/month" + ', ' + "$" + (line_protect * 12).toFixed(2) + "/year";
     } else {
         var line_protect_output_html = NOT_APPLICABLE;
 
@@ -293,16 +297,22 @@ function displayOutput() {
 
     ////save the text output
 
+    BASE_TITLE = base_title;
 
-    text_output = "Base-\r\n" +
-        base_output_text + "Base with Options-\r\n" + base_options_output_text + "Additional- \r\n" + "Surge Protect- " + surge_protect_output_html + "\r\n" + "Electronics Protect- " + electronics_protect_output_html + "\r\n" + "Line Protect-" + line_protect_output_html;
+    if (discount_list)
+        discount_list = " and " + discount_list;
+
+    if (optons_list + discount_list)
+        optons_list = "**includes " + optons_list + discount_list;
+
+    text_output = base_title + " Warranty" + "\r\n" + base_options_output_text + optons_list + "\r\n" + "Surge Protect- " + surge_protect_output_html + "\r\n" + "Electronics Protect- " + electronics_protect_output_html + "\r\n" + "Line Protect-" + line_protect_output_html;
     ///for disclosure message
     ADDITIONAL_TOTAL_MONTHLY = additional_total_monthly;
     OPTIONAL_TOTAL_MONTHLY = options_monthly;
 
 
 
-    console.log(text_output);
+    // console.log(text_output);
 
 
 }
@@ -321,16 +331,8 @@ $(document).ready(function (event) {
     // Get the modal
     var modal = document.getElementById("myModal");
 
-    // Get the button that opens the modal
-    // var btn = document.getElementById("myBtn");
-
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal 
-    // btn.onclick = function () {
-    //   modal.style.display = "block";
-    // }
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
@@ -419,7 +421,12 @@ $(document).ready(function (event) {
 
 
             alert("Invalid input for Base");
+            return;
         }
+
+
+
+
 
 
     });
@@ -608,7 +615,7 @@ $(document).ready(function (event) {
         }
 
 
-        var reason_det_row = "REASON DETAILS: " + "Customer interested in Cinch " + base_tag.substr(0, base_tag.length - 3) + " Warranty";
+        var reason_det_row = "REASON DETAILS: " + "Customer interested in Cinch " + BASE_TITLE + " Warranty";
 
 
         var new_line = '\r\n';
@@ -638,19 +645,25 @@ $(document).ready(function (event) {
 
         var after_30_days = $("#after-30-days").text();
         var after_60_days = $("#after-60-days").text();
-
+        var show_yearly_total = false;
 
         if ($("#discount1-chk").prop("checked")) {
             var dis_meg = DISCLOSURE_MESSAGE_2_IF_30_FREE;
 
-            dis_meg = dis_meg.replace("[ADDITIONAL TOTAL MONTHLY]", ADDITIONAL_TOTAL_MONTHLY.toFixed(2));
-
-            //  cal_meg=cal_meg.replace("[TOTAL INCLUDING OPTIONS AND ADDITIONS]",)
-
-
+            dis_meg = dis_meg.replace("[ADDITIONAL TOTAL MONTHLY]", applyTax(ADDITIONAL_TOTAL_MONTHLY.toFixed(2)));
         } else {
             var dis_meg = DISCLOSURE_MESSAGE_2_IF_NOT_30_FREE;
+        }
 
+
+
+        if ($("#pay-yearly").prop("checked")) {
+            show_yearly_total = true;
+        }
+
+        if ($("#pay-invoice").prop("checked")) {
+            show_yearly_total = true;
+            after_60_days = "on the closing date";
         }
 
 
@@ -658,8 +671,16 @@ $(document).ready(function (event) {
 
             var base = DISCLOSURE[disclosure];
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
-            bs_op_add_monthly = bs_op_add_monthly.toFixed(2);
-            dis_meg = dis_meg.replace("[TOTAL INCLUDING OPTIONS AND ADDITIONS]", bs_op_add_monthly);
+
+            if (show_yearly_total)
+                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
+            else
+                var bs_op_add_total = bs_op_add_monthly;
+
+            bs_op_add_total = applyTax(bs_op_add_total);
+
+            bs_op_add_total = bs_op_add_total.toFixed(2);
+            dis_meg = dis_meg.replace("[TOTAL INCLUDING OPTIONS AND ADDITIONS]", bs_op_add_total);
             dis_meg = dis_meg.replace("[30DAYSFUTURE]", after_30_days);
             dis_meg = dis_meg.replace("[60DAYSFUTURE]", after_60_days);
 
@@ -685,9 +706,6 @@ $(document).ready(function (event) {
 
     $("#offer-btn").click(function () {
 
-        // var text_area = $("#offer-text");
-        //var OFFER_TEXT = OFFER;
-        //var confirm_text = CONFIRM_TEXT;
         var name = $("#name-input").val();
         var phone = $("#phone-input").val();
         var username = $("#username").html();
@@ -697,7 +715,6 @@ $(document).ready(function (event) {
             zipcode = $("#state").text();
         }
 
-        // var warranty = $("#warranty-input").val();
 
         var offer_text = OFFER_TEXT.replace('[@NAME]', name);
         offer_text = offer_text.replace('[@DASH_USER_NAME]', username);
@@ -743,14 +760,34 @@ $(document).ready(function (event) {
 
         today = mm + '/' + dd + '/' + yyyy;
 
+
+
+        var show_yearly_total = false;
+        if ($("#pay-yearly").prop("checked")) {
+            show_yearly_total = true;
+        }
+
+        if ($("#pay-invoice").prop("checked")) {
+            show_yearly_total = true;
+            today = "on the closing date";
+        }
+
+
         for (var disclosure in DISCLOSURE) {
 
             var base_tag = disclosure;
-
             var base = DISCLOSURE[disclosure];
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
 
-            bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
+            if (show_yearly_total)
+                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
+            else
+                var bs_op_add_total = bs_op_add_monthly;
+
+            bs_op_add_total = applyTax(bs_op_add_total);
+
+            bs_op_add_total = bs_op_add_total.toFixed(2);
+            //bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
             break;
         }
 
@@ -762,7 +799,7 @@ $(document).ready(function (event) {
         ach_text = ach_text.replace("[TODAY'S DATE]", today);
 
 
-        ach_text = ach_text.replace("[FORM OUTPUT MONTHLY]", bs_op_add_monthly);
+        ach_text = ach_text.replace("[FORM OUTPUT MONTHLY]", bs_op_add_total);
 
 
 
@@ -783,6 +820,22 @@ $(document).ready(function (event) {
 
         today = mm + '/' + dd + '/' + yyyy;
 
+
+
+
+
+        var show_yearly_total = false;
+        if ($("#pay-yearly").prop("checked")) {
+            show_yearly_total = true;
+        }
+
+        if ($("#pay-invoice").prop("checked")) {
+            show_yearly_total = true;
+            today = "on the closing date";
+        }
+
+
+
         for (var disclosure in DISCLOSURE) {
 
             var base_tag = disclosure;
@@ -790,7 +843,16 @@ $(document).ready(function (event) {
             var base = DISCLOSURE[disclosure];
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
 
-            bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
+            if (show_yearly_total)
+                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
+            else
+                var bs_op_add_total = bs_op_add_monthly;
+
+            bs_op_add_total = applyTax(bs_op_add_total);
+
+            bs_op_add_total = bs_op_add_total.toFixed(2);
+
+            // bs_op_add_monthly = applyTax(bs_op_add_monthly).toFixed(2);
             break;
         }
 
@@ -805,7 +867,7 @@ $(document).ready(function (event) {
 
         cc_text = cc_text.replace("[TODAY'S DATE]", today);
 
-        cc_text = cc_text.replace('[FORM OUTPUT MONTHLY]', bs_op_add_monthly);
+        cc_text = cc_text.replace('[FORM OUTPUT MONTHLY]', bs_op_add_total);
 
 
 

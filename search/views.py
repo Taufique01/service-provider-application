@@ -215,18 +215,20 @@ class CalculatorView(APIView):
 
 
     def post(self, request):
-        
 
         try:
            input=request.data.get('state_name')
            if input.isalpha():
               calculator = Calculator.objects.get(state=input.upper())
               zipcode=''
+              place=''
            elif input.isdigit():
               zcdb = ZipCodeDatabase()
-              zip= zcdb[int(input)]
+              zip= zcdb[input]
               calculator = Calculator.objects.get(state=zip.state)
+              place='City: '+zip.place+', Zip: '+zip.zip
               zipcode=zip.zip
+
            else:
               return Response({'calculator': None})
            optionals=Optional.objects.all()
@@ -234,7 +236,8 @@ class CalculatorView(APIView):
            e_protects=ElectronicsProtect.objects.all()
            line_protect=LineProtect.objects.all()[0]
            discount=Discount.objects.all()[0]
-           return Response({'zipcode':zipcode,'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount,'calcmessage':calcmessage.message},)
+        
+           return Response({'place':place,'zipcode':zipcode,'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount,'calcmessage':calcmessage.message},)
         except:
            return Response({'calculator': None})
 
