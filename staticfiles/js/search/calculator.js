@@ -645,16 +645,10 @@ $(document).ready(function (event) {
 
         var after_30_days = $("#after-30-days").text();
         var after_60_days = $("#after-60-days").text();
+
+
         var show_yearly_total = false;
-
-        if ($("#discount1-chk").prop("checked")) {
-            var dis_meg = DISCLOSURE_MESSAGE_2_IF_30_FREE;
-
-            dis_meg = dis_meg.replace("[ADDITIONAL TOTAL MONTHLY]", applyTax(ADDITIONAL_TOTAL_MONTHLY.toFixed(2)));
-        } else {
-            var dis_meg = DISCLOSURE_MESSAGE_2_IF_NOT_30_FREE;
-        }
-
+        var is_invoice = false;
 
 
         if ($("#pay-yearly").prop("checked")) {
@@ -663,8 +657,31 @@ $(document).ready(function (event) {
 
         if ($("#pay-invoice").prop("checked")) {
             show_yearly_total = true;
-            after_60_days = "on the closing date";
+            is_invoice = true;
         }
+
+
+        if ($("#discount1-chk").prop("checked")) {
+            var dis_meg = DISCLOSURE_MESSAGE_2_IF_30_FREE;
+
+            dis_meg = dis_meg.replace("[ADDITIONAL TOTAL MONTHLY]", applyTax(ADDITIONAL_TOTAL_MONTHLY.toFixed(2)));
+            if (is_invoice)
+                after_60_days = "the closing date";
+
+        } else {
+            var dis_meg = DISCLOSURE_MESSAGE_2_IF_NOT_30_FREE;
+            if (is_invoice)
+                after_30_days = "the closing date";
+        }
+        ///collect the discount datas
+        if ($("#discount2-chk").prop("checked")) {
+            var discount2 = parseFloat($("#discount2-chk").val());
+        } else {
+            var discount2 = 0;
+        }
+
+
+
 
 
         for (var disclosure in DISCLOSURE) {
@@ -673,7 +690,7 @@ $(document).ready(function (event) {
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
 
             if (show_yearly_total)
-                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
+                var bs_op_add_total = yearlyAfterDiscount(bs_op_add_monthly, discount2);
             else
                 var bs_op_add_total = bs_op_add_monthly;
 
@@ -752,7 +769,6 @@ $(document).ready(function (event) {
 
     $("#btn-ach").click(function () {
 
-        var name = $("#name-input").val();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -762,15 +778,42 @@ $(document).ready(function (event) {
 
 
 
+        var name = $("#name-input").val();
+        var date = $("#after-30-days").text();
+        var is_invoice = false;
         var show_yearly_total = false;
+
+        ///discount month free
+        if ($("#discount1-chk").prop("checked")) {
+            MONTHS_IN_A_YEAR_WITH_DIS = ONE_MONTH_FREE_IN_YEAR;
+            date = $("#after-60-days").text();
+        } else {
+            MONTHS_IN_A_YEAR_WITH_DIS = MONTHS_IN_A_YEAR;
+
+        }
+
+
+        ///collect the discount datas
+        if ($("#discount2-chk").prop("checked")) {
+            var discount2 = parseFloat($("#discount2-chk").val());
+        } else {
+            var discount2 = 0;
+        }
+
+
+
+
         if ($("#pay-yearly").prop("checked")) {
             show_yearly_total = true;
+
         }
 
         if ($("#pay-invoice").prop("checked")) {
             show_yearly_total = true;
-            today = "on the closing date";
+            date = "the closing date";
         }
+
+
 
 
         for (var disclosure in DISCLOSURE) {
@@ -779,9 +822,9 @@ $(document).ready(function (event) {
             var base = DISCLOSURE[disclosure];
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
 
-            if (show_yearly_total)
-                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
-            else
+            if (show_yearly_total) {
+                var bs_op_add_total = yearlyAfterDiscount(bs_op_add_monthly, discount2);
+            } else
                 var bs_op_add_total = bs_op_add_monthly;
 
             bs_op_add_total = applyTax(bs_op_add_total);
@@ -795,7 +838,7 @@ $(document).ready(function (event) {
         var ach_text = ACH_TEXT.replace('[FORM_NAME]', name);
         ach_text = ach_text.replace('[FORM_NAME]', name);
         ach_text = ach_text.replace('[FORM_NAME]', name);
-        ach_text = ach_text.replace("[TODAY'S DATE]", today);
+        ach_text = ach_text.replace("[PAY DATE]", date);
         ach_text = ach_text.replace("[TODAY'S DATE]", today);
 
 
@@ -811,8 +854,6 @@ $(document).ready(function (event) {
     });
 
     $("#btn-cc").click(function () {
-
-        var name = $("#name-input").val();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -820,20 +861,41 @@ $(document).ready(function (event) {
 
         today = mm + '/' + dd + '/' + yyyy;
 
-
-
-
-
+        var name = $("#name-input").val();
+        var date = $("#after-30-days").text();
+        var is_invoice = false;
         var show_yearly_total = false;
+
+
+        ///discount month free
+        if ($("#discount1-chk").prop("checked")) {
+            MONTHS_IN_A_YEAR_WITH_DIS = ONE_MONTH_FREE_IN_YEAR;
+            date = $("#after-60-days").text();
+        } else {
+            MONTHS_IN_A_YEAR_WITH_DIS = MONTHS_IN_A_YEAR;
+
+        }
+
+
+        ///collect the discount datas
+        if ($("#discount2-chk").prop("checked")) {
+            var discount2 = parseFloat($("#discount2-chk").val());
+        } else {
+            var discount2 = 0;
+        }
+
+
+
+
         if ($("#pay-yearly").prop("checked")) {
             show_yearly_total = true;
+
         }
 
         if ($("#pay-invoice").prop("checked")) {
             show_yearly_total = true;
-            today = "on the closing date";
+            date = "the closing date";
         }
-
 
 
         for (var disclosure in DISCLOSURE) {
@@ -844,7 +906,7 @@ $(document).ready(function (event) {
             var bs_op_add_monthly = base + ADDITIONAL_TOTAL_MONTHLY + OPTIONAL_TOTAL_MONTHLY;
 
             if (show_yearly_total)
-                var bs_op_add_total = MONTHS_IN_A_YEAR_WITH_DIS * bs_op_add_monthly;
+                var bs_op_add_total = yearlyAfterDiscount(bs_op_add_monthly, discount2);
             else
                 var bs_op_add_total = bs_op_add_monthly;
 
@@ -863,7 +925,7 @@ $(document).ready(function (event) {
             name);
         cc_text = cc_text.replace('[FORM_NAME]',
             name);
-        cc_text = cc_text.replace("[TODAY'S DATE]", today);
+        cc_text = cc_text.replace("[PAY DATE]", date);
 
         cc_text = cc_text.replace("[TODAY'S DATE]", today);
 
