@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'zillowAPI',
     'search',
+    'message',
 #####django allauth###########
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+####calculator##########
     'phone_field',
     
 ]
@@ -180,14 +182,18 @@ ACCOUNT_EMAIL_VERIFICATION='mandatory'
 ACCOUNT_USERNAME_REQUIRED=True
 
 
-
+####EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#Email backend settings for Django
+#For less apps
+###https://l.facebook.com/l.php?u=https%3A%2F%2Fmyaccount.google.com%2Flesssecureapps%3Fpli%3D1%26fbclid%3DIwAR2CL_EvS0257JaBsqcIGK47_5EHxSaw1ZQMk2h9-R3laFTvsA8j9LiUNOw&h=AT3bkopboKv9FC-NRSloYitPDjXJuutczWQYT8kAt6GnU9F4CT9k35W_T75UX-DW0neaCl0YuO36C38uvfX492HiRRNDrJCcpSADz4c57njDKJSNRoW4O0Nq0l7QaQ
+####
 # Email backend settings for Django
-EMAIL_BACKEND =  'django.core.mail.backends.console.EmailBackend'#'django.core.mail.backends.smtp.EmailBackend'#backends.smtp.EmailBackend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 ##put yours email
-EMAIL_HOST_USER = ''
+EMAIL_HOST_USER = 'th.rafi9z@gmail.com'
 ##put your password
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'rafi9zce14006'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

@@ -538,33 +538,32 @@ $(document).ready(function (event) {
 
         }
 
-        var cob = "cob: ";
 
 
         if ($("#action-chk-1").prop("checked")) {
             //registered online account
-            cob = cob + $("#action-chk-1").val();
+            //cob = cob + $("#action-chk-1").val();
             action_taken_row = action_taken_row + '...' + $("#action-chk-1").val();
 
         }
 
         if ($("#action-chk-2").prop("checked")) {
             //Refused options and additions
-            cob = cob + '...' + $("#action-chk-2").val();
+            // cob = cob + '...' + $("#action-chk-2").val();
             action_taken_row = action_taken_row + '...' + $("#action-chk-2").val();
 
         }
 
         if ($("#action-chk-3").prop("checked")) {
             //Sent email confirmation
-            cob = cob + '...' + $("#action-chk-3").val();
+            // cob = cob + '...' + $("#action-chk-3").val();
             action_taken_row = action_taken_row + '...' + $("#action-chk-3").val();
 
         }
         var warranty = 'warranty #' + $("#warranty-input").val();
+        var cob = "cob: " + $("#cob-input").val();
 
-
-        sales_details_row = sales_details_row + '...' + 'enrolled in cinch  ' + base_tag + ' ded...' + warranty + '...' + cob;
+        sales_details_row = sales_details_row + '...' + 'enrolled in cinch  ' + base_tag + '...' + warranty + '...' + cob;
 
 
 
