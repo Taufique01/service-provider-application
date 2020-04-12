@@ -54,17 +54,17 @@ class SendMessage(APIView):
           except:
              return Response(data={'log':None,'status':'Error!Message not sent'})
           
-          email_receiver=LogReceiverEmail.objects.all()[0]
-          email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
-          email.send()
+#          email_receiver=LogReceiverEmail.objects.all()[0]
+ #         email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
+  #        email.send()
           return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
-          #try:
-             # email_receiver=LogReceiverEmail.objects.all()[0]
-             # email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
-             # email.send()
-              #return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
-          #except:
-           #   return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent but log not mailed'}, status=status.HTTP_200_OK)
+          try:
+              email_receiver=LogReceiverEmail.objects.all()[0]
+              email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
+              email.send()
+              return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
+          except:
+              return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent but log not mailed'}, status=status.HTTP_200_OK)
 
 
 
