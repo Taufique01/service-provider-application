@@ -127,8 +127,20 @@ class DirectoryTable(APIView):
                 sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
                 county_name=sp_data_filtered[0].county
                 state_name=sp_data_filtered[0].state
-                ##for on search with county name
+
                 sp_data_filtered=sp_data.filter(county=county_name,state=state_name)
+                ##eliminate duplicate service providers/ sp_names
+                flag={}
+                for sp_row in sp_data_filtered:
+                      try:
+                          if flag[sp_row.sp_name]:
+                               sp_data_filtered=sp_data_filtered.exclude(id=sp_row.id)
+                               
+                      except:
+                            flag[sp_row.sp_name]=True
+                      #print(flag)
+                              
+                          
              else:##if showSameCounty is off
                 sp_data_filtered=sp_data.filter(postal_code=search['postal_code'])
                 
@@ -199,7 +211,27 @@ class DirectoryTable(APIView):
           response['data']=SPSerializers(sp_data_filtered,many=True).data
           
           #print(response['data'])
-        
+         # states=SP.objects.all().values('state').distinct()
+          #for state in states:
+           #   counties=SP.objects.filter(state=state['state']).values('county').distinct()
+            #  for county in counties:
+             #     sp_counties=SP.objects.filter(state=state['state'],county=county['county'])
+              #    flag={}
+               #   for sp_county in sp_counties:
+                #      try:
+                 #         if flag[sp_county.sp_name]:
+                  #             sp_counties.exclude(postal_code=sp_count)
+                               
+                   #   except:
+                    #        flag[sp_county.sp_name]=True
+                              
+                          
+                  
+                  
+                  #print(sp_counties)
+
+
+          #print(states)
           return Response(data=response, status=status.HTTP_200_OK)
 
 

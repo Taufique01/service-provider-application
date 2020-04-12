@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
 from twilio.rest import Client
 from datetime import datetime
-from .models import LogReceiverEmail,Branding,MessageTemplate as MessageTemp,MessageLog
+from .models import LogReceiverEmail,Branding,MessageTemplate as MessageTemp,MessageLog,CSPhone
 from .utils import get_client_ip
 
 # Create your views here.
@@ -49,17 +49,22 @@ class SendMessage(APIView):
              tm=datetime.now().strftime("%Y-%m-%d %H:%M")
              #print('ip:'+ get_client_ip(request))
              log='Sent: '+tm+'\n'+'User name: '+request.user.get_full_name()+'\n'+'Contract: '+contract+'\n'+'Branding: '+request.data.get('branding')+'\n'+'Message:\n'+meg_body+'\n'+'Receiver: '+rec_phn+'\n'+'User ip:'+ get_client_ip(request)
-             MessageLog.objects.create(log=log)
+             MessageLog.objects.create(phone=rec_phn,log=log)
 
           except:
              return Response(data={'log':None,'status':'Error!Message not sent'})
-          try:
-              email_receiver=LogReceiverEmail.objects.all()[0]
-              email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
-              email.send()
-              return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
-          except:
-              return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent but log not mailed'}, status=status.HTTP_200_OK)
+          
+          email_receiver=LogReceiverEmail.objects.all()[0]
+          email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
+          email.send()
+          return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
+          #try:
+             # email_receiver=LogReceiverEmail.objects.all()[0]
+             # email = EmailMessage('Log: '+ rec_phn, log, to=[email_receiver.email])
+             # email.send()
+              #return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent and log mailed'}, status=status.HTTP_200_OK)
+          #except:
+           #   return Response(data={'log':log.replace('\n','<br>'),'status':'Message sent but log not mailed'}, status=status.HTTP_200_OK)
 
 
 
@@ -74,9 +79,9 @@ class MessageTemplate(APIView):
           #log_receiver_email=LogReceiverEmail.objects.all()[0]
           branding=Branding.objects.all()
           message_template=MessageTemp.objects.all()
+          csphone=CSPhone.objects.all()[0].phone
 
-
-          return Response({'branding':branding,'message_template':message_template})
+          return Response({'csphone':csphone,'branding':branding,'message_template':message_template})
 
 
 

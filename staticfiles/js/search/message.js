@@ -45,7 +45,17 @@ $(document).ready(function (event) {
 
 
     $("#message-body-title").change(function () {
+        var userphn = $("#phone-input").val();
+        var cus_name = $("#customer-name-input").val();
+        var cs_phone = $("#csphone-input").val();
+        var contract_num = $("#contract-input").val();
+
         var text = $(this).val();
+        text = text.replace("[#userphone]", userphn);
+        text = text.replace("[#csphone]", cs_phone);
+        text = text.replace("[#customername]", cus_name);
+        text = text.replace("[#contractnum]", contract_num);
+
         $("#mesaage-body-text").val(text);
         // console.log("change" + t);
 

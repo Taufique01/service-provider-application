@@ -7,6 +7,12 @@ from datetime import datetime
 from django.conf import settings
 # Create your models here.
 
+
+class CSPhone(models.Model):
+    phone = models.CharField(max_length=200)
+    def __str__(self):
+       return self.phone
+
 class LogReceiverEmail(models.Model):
     email = models.CharField(max_length=200)
     def __str__(self):
@@ -26,10 +32,11 @@ class MessageTemplate(models.Model):
 
 
 class MessageLog(models.Model):
+    phone=models.CharField(max_length=20,default='unknown')
     log = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     def __str__(self):
-       return  str(self.created)
+       return self.phone + str(self.created)
 
 
 

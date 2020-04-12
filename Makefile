@@ -14,5 +14,5 @@ serve:venv
 
 deploy:develop
 	env/bin/python manage.py collectstatic  --noinput --clear
-	kill -HUP 12293 #$( cat app.pid )
+	
 	echo "Deploy successful"

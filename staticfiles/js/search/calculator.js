@@ -495,17 +495,21 @@ $(document).ready(function (event) {
             var monthly_or_yearly_row = "";
         }
 
-
+        var cob_dob_str = "";
         if ($("#pay-ach").prop("checked")) {
 
             var pay_details = $("#pay-ach").val();
+            cob_dob_str = "cob: ";
         } else if ($("#pay-cc").prop("checked")) {
 
 
             var pay_details = $("#pay-cc").val();
+            cob_dob_str = "cob: ";
+
 
         } else if ($("#pay-invoice").prop("checked")) {
             var pay_details = $("#pay-invoice").val();
+            cob_dob_str = "realtor: ";
 
         } else {
 
@@ -561,7 +565,7 @@ $(document).ready(function (event) {
 
         }
         var warranty = 'warranty #' + $("#warranty-input").val();
-        var cob = "cob: " + $("#cob-input").val();
+        var cob = cob_dob_str + $("#cob-input").val();
 
         sales_details_row = sales_details_row + '...' + 'enrolled in cinch  ' + base_tag + '...' + warranty + '...' + cob;
 

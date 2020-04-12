@@ -172,15 +172,19 @@
                             </select>
                         </div>
 
-                        <div class=""><input type="text" placeholder="Contract number" name="contract" class="form-control form-control-sm"></div>
+                        <div class=""><input id="contract-input" type="text" placeholder="Contract number" name="contract" class="form-control form-control-sm"></div>
 
 
                         <div class=""><input type="text" placeholder="Receiver Phone" name="receiver" class="form-control form-control-sm" required></div>
+                        <div class="">
+                            <input id="customer-name-input" type="text" placeholder="Customer Name" name="customer_name" class="form-control form-control-sm">
+                        </div>
 
 
                         <div class="form-group">
                             <div>Message Templates</div>
                             <select id="message-body-title" class="browser-default  custom-select custom-select-sm">
+                                <option class="mesaage-titles" value="">Custom</option>
                                 {% for template in message_template %}
                                 <option class="mesaage-titles" value="{{template.message}}">{{template.title}}</option>
                                 {% endfor %}
@@ -190,10 +194,7 @@
 
                         <div class="form-group">
 
-                            <textarea id="mesaage-body-text" name="message_body" class="form-control rounded-0" style="height: 280px">
-
-
-                        </textarea>
+                            <textarea id="mesaage-body-text" name="message_body" class="form-control rounded-0" style="height: 280px"></textarea>
 
                         </div>
 
@@ -235,6 +236,14 @@
             <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
+
+
+        <!-- hidden content -->
+        <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
+        <input id="csphone-input" type="text" value="{{csphone}}" style="display: none">
+
+        <div id="username" style="display: none">{{request.user.get_full_name}}</div>
+
 
     </div>
     <!-- jQuery -->
