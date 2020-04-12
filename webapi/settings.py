@@ -193,7 +193,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 ##put yours email
 EMAIL_HOST_USER = 'th.rafi9z@gmail.com'
 ##put your password
-EMAIL_HOST_PASSWORD = 'rafi9zce14006'
+EMAIL_HOST_PASSWORD = 'phpypkloswlhaeow'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
