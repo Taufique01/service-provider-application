@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
+
 from django.db.models import Count
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -21,8 +23,50 @@ from webapi import settings
 from django.utils.decorators import method_decorator
 from .serializers import SPSerializers
 
-class GetZillowSearch(APIView):
+
+class PropertyInfoTemplate(LoginRequiredMixin,APIView):
      
+      renderer_classes = [TemplateHTMLRenderer]
+      template_name = 'property_info.html'
+      #permission_required = 'property_info_permission'
+
+      def get(self, request, *args, **kwargs):
+          
+
+
+          return Response()
+
+
+
+class TimezoneTemplate(LoginRequiredMixin, PermissionRequiredMixin,APIView):
+     
+      renderer_classes = [TemplateHTMLRenderer]
+      template_name = 'timezone.html'
+      permission_required = 'auth.timezone_permission'
+
+      def get(self, request, *args, **kwargs):
+
+          return Response()
+
+
+
+
+
+
+class DirectoryTemplate(LoginRequiredMixin, PermissionRequiredMixin,APIView):
+     
+      renderer_classes = [TemplateHTMLRenderer]
+      template_name = 'directory.html'
+      permission_required = 'auth.directory_permission'
+
+      def get(self, request, *args, **kwargs):
+
+          return Response()
+
+
+class GetZillowSearch(LoginRequiredMixin, PermissionRequiredMixin,APIView):
+     
+      permission_required = 'auth.zillow_permission'
       def post(self, request, *args, **kwargs):
 
           Count.load().count_zillow()
@@ -43,8 +87,8 @@ class GetZillowSearch(APIView):
           return Response(data=json_string, status=status.HTTP_200_OK)
 
 
-class GetDarkSkySearch(APIView):
-     
+class GetDarkSkySearch(LoginRequiredMixin, PermissionRequiredMixin,APIView):
+      permission_required = 'auth.darksky_permission'
       def getIcon(self,icon):
           url=settings.STATIC_URL+'images/icons/'+icon+'.png'
           return url
@@ -115,8 +159,9 @@ class GetDarkSkySearch(APIView):
           return Response(data=weather, status=status.HTTP_200_OK)
 
 
-class DirectoryTable(APIView):
-     
+class DirectoryTable(LoginRequiredMixin, PermissionRequiredMixin,APIView):
+     permission_required = 'auth.directory_search_permission'     
+
      def getFilteredData(self,sp_data,search):
          if not search['postal_code']:
             sp_data_filtered=sp_data
@@ -237,10 +282,12 @@ class DirectoryTable(APIView):
 
 
 
-class CalculatorView(APIView):
+class CalculatorView(LoginRequiredMixin, PermissionRequiredMixin,APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'calculator.html'
     http_method_names=['get','post',]
+
+    permission_required = 'auth.calculator_permission'
     def get(self, request):
 
         return Response({'calculator': None})

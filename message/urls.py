@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from . import views
 
 urlpatterns = [
-    path('message/',login_required(views.MessageTemplate.as_view()),name='message'),
-    path('send-message/',login_required(views.SendMessage.as_view()),name='send-message'),
+    path('message/',views.MessageTemplate.as_view(),name='message'),
+    path('send-message/',views.SendMessage.as_view(),name='send-message'),
 
 ]

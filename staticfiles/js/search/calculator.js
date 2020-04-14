@@ -499,17 +499,17 @@ $(document).ready(function (event) {
         if ($("#pay-ach").prop("checked")) {
 
             var pay_details = $("#pay-ach").val();
-            cob_dob_str = "cob: ";
+            cob_dob_str = "cob/dob: ";
         } else if ($("#pay-cc").prop("checked")) {
 
 
             var pay_details = $("#pay-cc").val();
-            cob_dob_str = "cob: ";
+            cob_dob_str = "cob/dob: ";
 
 
         } else if ($("#pay-invoice").prop("checked")) {
             var pay_details = $("#pay-invoice").val();
-            cob_dob_str = "realtor: ";
+            cob_dob_str = "realtor/escrow: ";
 
         } else {
 

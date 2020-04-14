@@ -5,16 +5,16 @@ from django.contrib.auth.decorators import login_required
 from . import views
 urlpatterns = [
        # URLs that do not require a session or valid token
-    path('',login_required(TemplateView.as_view(template_name="empty.html")),name='propertyinfo'),
-    path('timezone/',login_required(TemplateView.as_view(template_name="timezone.html")),name='timezone'),
-    path('zillow/', login_required(views.GetZillowSearch.as_view()),name='zillow_search'),
-    path('darksky/', login_required(views.GetDarkSkySearch.as_view()),name='darksky_search'),
-    path('counts/', login_required(views.Counts.as_view()),name='search_counts'),
+    path('',views.PropertyInfoTemplate.as_view(),name='propertyinfo'),
+    path('timezone/',views.TimezoneTemplate.as_view(),name='timezone'),
+    path('zillow/', views.GetZillowSearch.as_view(),name='zillow_search'),
+    path('darksky/', views.GetDarkSkySearch.as_view(),name='darksky_search'),
+    path('counts/', views.Counts.as_view(),name='search_counts'),
 
-    path('directories/',login_required(TemplateView.as_view(template_name="directory.html")),name='directory'),
+    path('directories/',views.DirectoryTemplate.as_view(),name='directory'),
 
-    path('directories/sp/filter/', login_required(views.DirectoryTable.as_view()),name='sp_table_filter'),
-    path('calculator/', login_required(views.CalculatorView.as_view()),name='calculator'),
+    path('directories/sp/filter/',views.DirectoryTable.as_view(),name='sp_table_filter'),
+    path('calculator/', views.CalculatorView.as_view(),name='calculator'),
 
    
 ]

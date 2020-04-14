@@ -40,6 +40,17 @@ class MessageLog(models.Model):
 
 
 
+from django.db.models.signals import pre_migrate
+from django.contrib.auth.models import Permission
+from django.conf import settings
+from django.dispatch import receiver
+from django.contrib.auth import models as auth_models
+
+# custom user related permissions
+@receiver(pre_migrate, sender=auth_models)
+def add_user_permissions(sender, **kwargs):
+    content_type = ContentType.objects.get_for_model(User)
+    Permission.objects.get_or_create(codename='view_user', name='View user', content_type=content_type)
 
 
 

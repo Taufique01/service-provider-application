@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
+
 from django.db.models import Count
 from django.core.mail import EmailMessage
 
@@ -7,6 +9,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
+#from rest_framework_rules.mixins import PermissionRequiredMixin
+
+
 from twilio.rest import Client
 from datetime import datetime
 from .models import LogReceiverEmail,Branding,MessageTemplate as MessageTemp,MessageLog,CSPhone
@@ -16,9 +21,9 @@ from .utils import get_client_ip
 
 
 
-class SendMessage(APIView):
+class SendMessage(LoginRequiredMixin, PermissionRequiredMixin,APIView):
      
-
+      permission_required = 'auth.message_permission'
 
       def post(self, request, *args, **kwargs):
 
@@ -69,10 +74,11 @@ class SendMessage(APIView):
 
 
 
-class MessageTemplate(APIView):
+class MessageTemplate(LoginRequiredMixin, PermissionRequiredMixin,APIView):
      
       renderer_classes = [TemplateHTMLRenderer]
       template_name = 'message.html'
+      permission_required = 'auth.message_permission'
 
       def get(self, request, *args, **kwargs):
           

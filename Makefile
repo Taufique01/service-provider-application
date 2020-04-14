@@ -6,7 +6,7 @@ venv:env/bin/pip
 env/bin/pip:
 	python3 -m venv env
 
-develop:venv
+develop:
 	env/bin/pip install -r requirements.txt
 	env/bin/python manage.py migrate
 serve:venv
