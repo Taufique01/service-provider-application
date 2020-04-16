@@ -24,11 +24,11 @@ from django.utils.decorators import method_decorator
 from .serializers import SPSerializers
 
 
-class PropertyInfoTemplate(LoginRequiredMixin,APIView):
+class PropertyInfoTemplate(LoginRequiredMixin,PermissionRequiredMixin,APIView):
      
       renderer_classes = [TemplateHTMLRenderer]
       template_name = 'property_info.html'
-      #permission_required = 'property_info_permission'
+      permission_required = 'property_info_permission'
 
       def get(self, request, *args, **kwargs):
           
@@ -315,10 +315,11 @@ class CalculatorView(LoginRequiredMixin, PermissionRequiredMixin,APIView):
            e_protects=ElectronicsProtect.objects.all()
            line_protect=LineProtect.objects.all()[0]
            discount=Discount.objects.all()[0]
-        
-           return Response({'place':place,'zipcode':zipcode,'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount,'calcmessage':calcmessage.message},)
+           customer_name=request.data.get('customer_name')
+           return Response({'customer_name':customer_name,'place':place,'zipcode':zipcode,'calculator': calculator,'optionals':optionals,'surge_protects':surge_protects,'e_protects':e_protects,'line_protect':line_protect,'discount':discount,'calcmessage':calcmessage.message},)
         except:
-           return Response({'calculator': None})
+           customer_name=request.data.get('customer_name')
+           return Response({'customer_name':customer_name,'calculator': None})
 
         
  

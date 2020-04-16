@@ -26,7 +26,7 @@ BASE_URL='http://192.243.100.74'
 SECRET_KEY = ')=m63ldv543c1q!d7e1mlt)x8a_o1nu*f#x-f+ny#8k(xk7s$q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','192.243.100.74','www.fivethree.pro','fivethree.pro']
 
@@ -185,6 +185,11 @@ ACCOUNT_LOGIN_ON_PASSWORD_RESET =True
 ACCOUNT_USERNAME_REQUIRED=True
 
 
+ACCOUNT_FORMS = { 
+'signup': 'search.accountForm.CustomSignupForm', 
+} 
+
+
 ####EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #Email backend settings for Django
 #For less apps
@@ -192,15 +197,15 @@ ACCOUNT_USERNAME_REQUIRED=True
 ####
 # Email backend settings for Django
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.zoho.eu'
 ##put yours email
-EMAIL_HOST_USER = 'franklinatlasllc@gmail.com'
+EMAIL_HOST_USER = 'admin@fivethree.pro'
 ##put your password
-EMAIL_HOST_PASSWORD = 'jsbjjpunardifvwp'
+EMAIL_HOST_PASSWORD = 'TevvyTTgyvf4'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
+DEFAULT_FROM_EMAIL='admin@fivethree.pro'
 
 
 
