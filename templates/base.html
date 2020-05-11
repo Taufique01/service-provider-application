@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class=" ">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'images/title_logo.png' %}" type="image/ico">
+
+    <title>Novonil</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static '/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static '/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
+
+
+    <link href="{% static '/css/custom/nav.css' %}" rel="stylesheet">
+    {% block tnymice %}
+
+    {% endblock %}
+
+
+    {% block links %}
+
+
+
+
+    {% endblock links %}
+
+    <style>
+
+
+
+    </style>
+
+</head>
+<!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function() {
+        var options = {
+            whatsapp: "+8801784945006", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            position: "right", // Position may be 'right' or 'left'
+        };
+        var proto = document.location.protocol,
+            host = "getbutton.io",
+            url = proto + "//static." + host;
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function() {
+            WhWidgetSendButton.init(host, proto, options);
+        };
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    })();
+
+</script>
+<!-- /GetButton.io widget 40817a   1a512e  677d2c -->
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div style="position: fixed;" class="col-md-3 left_col">
+                <div style="" class="left_col scroll-view">
+                    <div style="border: 0;">
+                        <img class="img-fluid" src="{% static '/images/logo_nav.png' %}" alt="..." class="">
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+
+                            <ul class="nav side-menu">
+
+                                {% block homelink %}
+
+                                <li class="nav child_menu">
+                                    <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
+                                </li>
+
+                                {% endblock homelink %}
+
+                                <li class="nav child_menu">
+                                    <a href="{% url 'add-estimate' %}"><i class="fa fa-plus"></i>New Estimates</a>
+                                </li>
+
+
+                                {% if user.is_authenticated %}
+
+                                <li><a><i class="fa fa-calculator"></i> Estimates <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+
+                                        {% for estimate in estimates %}
+
+                                        {%if estimate.status %}
+                                        <li style="width: 210px; overflow-x: hidden"><a href="{% url 'estimate-details' estimate.id  %}" style="color:white">{{estimate.title}}</a></li>
+                                        {% else %}
+                                        <li style="width: 210px; overflow-x: hidden"><a href="{% url 'estimate-details' estimate.id  %}">{{estimate.title}}</a></li>
+
+                                        {% endif %}
+
+
+                                        {% endfor %}
+
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-shopping-cart"></i> Orders <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        {% for order in orders %}
+                                        <li style="width: 210px; overflow-x: hidden" class="text-wrap"><a href="{% url 'order-details' order.id  %}">{{order.title}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+                                {% endif %}
+
+
+                            </ul>
+
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div style="height:70px" class="navbar  top_nav">
+
+
+                <div class="">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav style=" float: right; position: relative;top: 0px;right: 0px;" class="nav">
+
+                        <ul class="navbar-right">
+
+
+                            {% if user.is_authenticated %}
+
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    {{ request.user.username }}
+                                </a>
+                                <div style="display:relative;top:35px;left: -100px;" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="{% url 'user-referral' %}">
+
+                                        <span>Refer and Earn</span>
+                                    </a>
+
+                                    <a style="padding: 0px 0px 0px 0px" id="sign-out-a" class="dropdown-item" href="">
+
+
+                                        <form id="logout-form" style="display: block;margin-bottom: 0px;padding-bottom: 0px;" method="post" action="{% url 'account_logout' %}">
+                                            {% csrf_token %}
+
+                                            <button class="signout-btn" style="border: none;background-color: transparent;width: 100%;height: 40px;text-align: left;padding-left: 20px" type="submit">Sign Out<i class="fa fa-sign-out pull-right"></i></button>
+                                        </form>
+                                    </a> </div>
+                            </li>
+                            {% else %}
+
+                            <li><a href="/accounts/login/">Sign in</a>/<a href="/accounts/signup/">Sign Up</a></li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+
+
+
+            {% block content1 %}
+            {% endblock content1 %}
+
+
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+
+
+
+
+
+
+                    {% block content %}
+                    {% endblock content %}
+
+
+
+
+                </div>
+            </div>
+
+            <!-- page content -->
+
+
+
+
+
+
+        </div>
+
+
+
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+
+                Copyright 2020 all rights reserved. Email: admin@nobonil.com
+            </div>
+
+
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
+    </div>
+    <!-- hidden content -->
+    <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
+    <input id="csphone-input" type="text" value="{{csphone}}" style="display: none">
+
+    <div id="username" style="display: none">{{request.user.get_full_name}}</div>
+
+
+
+    <!-- jQuery -->
+    <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static '/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{% static '/build/js/custom.min.js' %}"></script>
+
+    {% block js %}
+
+
+
+
+    {% endblock js %}
+
+
+
+
+</body>
+
+
+</html>

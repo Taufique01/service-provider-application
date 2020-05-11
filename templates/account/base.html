@@ -1,8 +1,6 @@
 {% load static %}
-{% load i18n %}
 
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class=" ">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,61 +8,312 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="icon" href="{% static 'images/title_logo.png' %}" type="image/ico">
 
     <title>FiveThree.pro</title>
+
     <!-- Bootstrap -->
     <link href="{% static '/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{% static '/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{% static '/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{% static '/vendors/animate.css/animate.min.css' %}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
 
 
+    <link href="{% static '/css/custom/nav.css' %}" rel="stylesheet">
+
+
+
+
+    <!-- Web Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,900,700,500,300' rel='stylesheet' type='text/css'>
+    <!-- Flaticon CSS -->
+    <link href="{% static 'fonts/flaticon/flaticon.css' %}" rel="stylesheet">
+    <!-- font-awesome CSS -->
+    <link href="{% static '/css/home-page/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- Offcanvas CSS -->
+    <link href="{% static '/css/home-page/hippo-off-canvas.css' %}" rel="stylesheet">
+    <!-- animate CSS -->
+    <link href="{% static '/css/home-page/animate.css' %}" rel="stylesheet">
+    <!-- owl.carousel CSS -->
+    <link href="{% static '/css/home-page/owl.theme.css' %}" rel="stylesheet">
+    <link href="{% static '/css/home-page/owl.carousel.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static  '/css/home-page/style.css' %}" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link href="{% static '/css/home-page/responsive.css' %}" rel="stylesheet">
+    <link href="{% static '/css/home-page/home.css' %}" rel="stylesheet">
+
+
+
+
+    <script src="{% static '/js/home-page/vendor/modernizr-2.8.1.min.js' %}"></script>
+
+
+
+
+
+    <style>
+
+
+
+    </style>
+
 </head>
+<!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function() {
+        var options = {
+            whatsapp: "+8801784945006", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            position: "right", // Position may be 'right' or 'left'
+        };
+        var proto = document.location.protocol,
+            host = "getbutton.io",
+            url = proto + "//static." + host;
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function() {
+            WhWidgetSendButton.init(host, proto, options);
+        };
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+    })();
 
-<body class="login">
-    <div>
-        <a class="hiddenanchor" id="signup"></a>
-        <a class="hiddenanchor" id="signin"></a>
+</script>
+<!-- /GetButton.io widget 40817a   1a512e  677d2c -->
 
-        <div class="login_wrapper">
-            {% block content %}
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div style="position: fixed;" class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div style="border: 0;">
+                        <img class="img-fluid" src="{% static '/images/logo_nav.png' %}" alt="..." class="">
+                    </div>
+                    <div class="clearfix"></div>
 
-            <h1>{% trans 'My Account' %}</h1>
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
 
-            <ul class="nav nav-tabs">
-                <li class="{% block account_nav_email %}{% endblock %}">
-                    <a href="{% url 'account_email' %}">{% trans 'E-mail Addresses' %}</a>
-                </li>
-                <li class="{% block account_nav_change_password %}{% endblock %}">
-                    <a href="{% url 'account_change_password' %}">{% trans 'Change Password' %}</a>
-                </li>
-                {% url 'socialaccount_connections' as connections_url %}
-                {% if connections_url %}
-                <li class="{% block account_nav_socialaccount_connections %}{% endblock %}">
-                    <a href="{{ connections_url }}">{% trans 'Connected Accounts' %}</a>
-                </li>
-                {% endif %}
-            </ul>
-            {% block account_content %}
-            {% endblock %}
+                            <ul class="nav side-menu">
 
-            {% endblock %}
+                                {% block homelink %}
 
-            <div>
-                <h1><img class="img-fluid" src="{% static '/images/logo_nav.png' %}" alt="..." class="">
-                </h1>
-                <p style="margin-left: 90px;">©2020 All Rights Reserved.</p>
+                                <li class="nav child_menu">
+                                    <a href="{% url 'home' %}"><i class="fa fa-home"></i>Home</a>
+                                </li>
+
+                                {% endblock homelink %}
+
+                                <li class="nav child_menu">
+                                    <a href="{% url 'add-estimate' %}"><i class="fa fa-plus"></i>New Estimates</a>
+                                </li>
+
+
+                                {% if user.is_authenticated %}
+
+                                <li><a><i class="fa fa-calculator"></i> Estimates <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+
+                                        {% for estimate in estimates %}
+
+                                        {%if estimate.status %}
+                                        <li style="width: 210px; overflow-x: hidden"><a href="{% url 'estimate-details' estimate.id  %}" style="color:white">{{estimate.title}}</a></li>
+                                        {% else %}
+                                        <li style="width: 210px; overflow-x: hidden"><a href="{% url 'estimate-details' estimate.id  %}">{{estimate.title}}</a></li>
+
+                                        {% endif %}
+
+
+                                        {% endfor %}
+
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-shopping-cart"></i> Orders <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        {% for order in orders %}
+                                        <li style="width: 210px; overflow-x: hidden" class="text-wrap"><a href="{% url 'order-details' order.id  %}">{{order.title}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+                                {% endif %}
+
+
+                            </ul>
+
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
             </div>
+
+            <!-- top navigation -->
+            <div style="height:70px" class="navbar  top_nav">
+
+
+                <div class="">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav style=" float: right; position: relative;top: 0px;right: 0px;" class="nav">
+
+                        <ul class="navbar-right">
+
+
+                            {% if user.is_authenticated %}
+
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    {{ request.user.username }}
+                                </a>
+                                <div style="display:relative;top:35px;left: -50px;" class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="{% url 'user-referral' %}">
+
+                                        <span>Refer and Earn</span>
+                                    </a>
+
+                                    <a style="padding: 0px 0px 0px 0px" id="sign-out-a" class="dropdown-item" href="">
+
+
+                                        <form id="logout-form" style="display: block;margin-bottom: 0px;padding-bottom: 0px;" method="post" action="{% url 'account_logout' %}">
+                                            {% csrf_token %}
+
+                                            <button class="signout-btn" style="border: none;background-color: transparent;width: 100%;height: 40px;text-align: left;padding-left: 20px" type="submit">Sign Out<i class="fa fa-sign-out pull-right"></i></button>
+                                        </form>
+                                    </a> </div>
+                            </li>
+                            {% else %}
+
+                            <li><a href="/accounts/login/">Sign in</a>/<a href="/accounts/signup/">Sign Up</a></li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+
+
+
+            {% block content1 %}
+            {% endblock content1 %}
+
+
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+
+
+
+
+
+
+                    {% block content %}
+                    {% endblock content %}
+
+
+
+
+                </div>
+            </div>
+
+            <!-- page content -->
+
+
+
+
+
+
         </div>
+
+
+
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+
+                Copyright 2020 all rights reserved. Email: admin@nobonil.com
+            </div>
+
+
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+
     </div>
+    <!-- hidden content -->
+    <input style="display:none" id="phone-input" type="tel" name="phone" placeholder="Phone" value="{{request.user.phone.phone}}">
+    <input id="csphone-input" type="text" value="{{csphone}}" style="display: none">
+
+    <div id="username" style="display: none">{{request.user.get_full_name}}</div>
+
+
+
+    <!-- jQuery -->
+    <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static '/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{% static '/build/js/custom.min.js' %}"></script>
+
+
+
+    <!-- jQuery -->
+    <script src="{% static 'js/home-page/jquery.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/home-page/bootstrap.min.js' %}"></script>
+    <!-- wow.min.js -->
+    <script src="{% static 'js/home-page/wow.min.js' %}"></script>
+    <!-- smoothscroll -->
+    <script src="{% static 'js/home-page/smoothscroll.js' %}"></script>
+    <!-- twitterFetcher_min -->
+    <script src="{% static 'js/home-page/twitterFetcher_min.js' %}"></script>
+    <!-- owl.carousel -->
+    <script src="{% static 'js/home-page/owl.carousel.min.js' %}"></script>
+    <!-- Offcanvas Menu -->
+    <script src="{% static 'js/home-page/hippo-offcanvas.js' %}"></script>
+    <!-- inview -->
+    <script src="{% static 'js/home-page/jquery.inview.min.js' %}"></script>
+    <!-- stellar -->
+    <script src="{% static 'js/home-page/jquery.stellar.js' %}"></script>
+    <!-- countTo -->
+    <script src="{% static 'js/home-page/jquery.countTo.js' %}"></script>
+    <!-- Scrolling Nav JavaScript -->
+    <script src="{% static 'js/home-page/jquery.easing.min.js' %}"></script>
+    <!-- flickerPhoto -->
+    <script src="{% static 'js/home-page/flickerPhoto.min.js' %}"></script>
+    <!-- Shuffle.min js -->
+    <script src="{% static 'js/home-page/jquery.shuffle.min.js' %}"></script>
+    <!-- GOGLE MAP -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <!-- Custom Script -->
+    <script src="{% static 'js/home-page/scripts.js' %}"></script>
+
+
+
+
+
+
 </body>
+
 
 </html>

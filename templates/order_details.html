@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags   %}
+{% load static %}
+
+{% block links %}
+
+<!-- Web Fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,900,700,500,300' rel='stylesheet' type='text/css'>
+<!-- Flaticon CSS -->
+<link href="{% static 'fonts/flaticon/flaticon.css' %}" rel="stylesheet">
+<!-- font-awesome CSS -->
+<link href="{% static '/css/home-page/font-awesome.min.css' %}" rel="stylesheet">
+<!-- Offcanvas CSS -->
+<link href="{% static '/css/home-page/hippo-off-canvas.css' %}" rel="stylesheet">
+<!-- animate CSS -->
+<link href="{% static '/css/home-page/animate.css' %}" rel="stylesheet">
+<!-- owl.carousel CSS -->
+<link href="{% static '/css/home-page/owl.theme.css' %}" rel="stylesheet">
+<link href="{% static '/css/home-page/owl.carousel.css' %}" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static  '/css/home-page/style.css' %}" rel="stylesheet">
+<!-- Responsive CSS -->
+<link href="{% static '/css/home-page/responsive.css' %}" rel="stylesheet">
+<link href="{% static '/css/home-page/home.css' %}" rel="stylesheet">
+
+
+
+
+<script src="{% static '/js/home-page/vendor/modernizr-2.8.1.min.js' %}"></script>
+
+
+
+{% endblock links %}
+
+
+{% block content %}
+  <div>
+    <h2>Title:
+        {{order.title}}
+
+    </h2>
+    <h2>Code:
+        {{order.code}}
+
+    </h2>
+
+    <h2> Catagory: {{order.catagory}}
+    </h2>
+
+    <div>Status: {{order.status}}</div>
+
+    <div>Description:<br>
+        {{ order.description|safe }}
+    </div>
+
+    <h2>Asking Price: {{ order.price }}</h2>
+    <h2>Estimated Price: {{order.estimated_price}}</h2>
+    <h2>Starting Date:{{ order.starting_date }}</h2>
+    <h2>Delivery Date:{{ order.delivery_date }}</h2>
+    <h2>We will contact you on {{order.contact_method}}, address <b>{{order.contact_address}}</b>.</h2>
+    <div>
+        <p>{{order.comment}}</p>
+    </div>
+
+
+        <div>Dear {{request.user}}, You can contact us via email at <b>admin@nobonil.com</b> or whatsapp <b>+88017849745006</b> any time regarding your order. We will contact you to the address you provided regarding this order. </div>
+
+        <div>Thanks for choosing our services.</div>
+
+    
+    
+  </div>
+
+{% endblock content %}
+
+
+
+
+
+
+{% block js %}
+
+<!-- jQuery -->
+<script src="{% static 'js/home-page/jquery.js' %}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/home-page/bootstrap.min.js' %}"></script>
+<!-- wow.min.js -->
+<script src="{% static 'js/home-page/wow.min.js' %}"></script>
+<!-- smoothscroll -->
+<script src="{% static 'js/home-page/smoothscroll.js' %}"></script>
+<!-- twitterFetcher_min -->
+<script src="{% static 'js/home-page/twitterFetcher_min.js' %}"></script>
+<!-- owl.carousel -->
+<script src="{% static 'js/home-page/owl.carousel.min.js' %}"></script>
+<!-- Offcanvas Menu -->
+<script src="{% static 'js/home-page/hippo-offcanvas.js' %}"></script>
+<!-- inview -->
+<script src="{% static 'js/home-page/jquery.inview.min.js' %}"></script>
+<!-- stellar -->
+<script src="{% static 'js/home-page/jquery.stellar.js' %}"></script>
+<!-- countTo -->
+<script src="{% static 'js/home-page/jquery.countTo.js' %}"></script>
+<!-- Scrolling Nav JavaScript -->
+<script src="{% static 'js/home-page/jquery.easing.min.js' %}"></script>
+<!-- flickerPhoto -->
+<script src="{% static 'js/home-page/flickerPhoto.min.js' %}"></script>
+<!-- Shuffle.min js -->
+<script src="{% static 'js/home-page/jquery.shuffle.min.js' %}"></script>
+<!-- GOGLE MAP -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Custom Script -->
+<script src="{% static 'js/home-page/scripts.js' %}"></script>
+
+
+{% endblock js %}
+
+
+
+
+
+
+
+
+
+

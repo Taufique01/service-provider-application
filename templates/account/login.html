@@ -1,86 +1,47 @@
-{% load static %}
-<!DOCTYPE html>
+{% extends "account/base.html" %}
+{% load bootstrap %}
 {% load i18n %}
-<html lang="en">
+{% load account socialaccount %}
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
 
-    <link rel="icon" href="{% static 'images/title_logo.png' %}" type="image/ico">
+{% block content %}
 
-    <title>FiveThree.pro</title>
-    <!-- Bootstrap -->
-    <link href="{% static '/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{% static '/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{% static '/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{% static '/vendors/animate.css/animate.min.css' %}" rel="stylesheet">
+<h1>{% trans "Sign In" %}</h1>
 
-    <!-- Custom Theme Style -->
-    <link href="{% static '/build/css/custom.min.css' %}" rel="stylesheet">
+{% get_providers as socialaccount_providers %}
 
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 
-</head>
+<div class="socialaccount_ballot">
 
-<body class="login">
-    <div>
-        <a class="hiddenanchor" id="signup"></a>
-        <a class="hiddenanchor" id="signin"></a>
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
 
-        <div class="login_wrapper">
-            <div class="animate form login_form">
-                <section class="login_content">
-                    <form method="POST" action="{% url 'account_login' %}">{% csrf_token %}
-                        <h1>Login</h1>
-                        <div style="color: red;"> {{form.non_field_errors}}</div>
+  <div class="login-or">{% trans 'or' %}</div>
 
-                        <div>
-                            <div style="color: red;">{{form.login.errors}}</div>
-                            <input name="login" type="text" class="form-control" placeholder="Username" required="" />
-                        </div>
-                        <div>
-                            <div style="color: red;"> {{form.password.errors}} </div>
+</div>
 
-                            <input name="password" type="password" class="form-control" placeholder="Password" required="" />
-                        </div>
+{% include "socialaccount/snippets/login_extra.html" %}
 
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
 
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+   {{ form|bootstrap }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+  <a  href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
 
-                        <div>
-                            <input type="submit" class="btn btn-default submit" value="Log in">
-                            <a class="reset_pass"  href="{% url 'account_reset_password' %}">Lost your password?</a>
-                        </div>
+</form>
 
-                        <div class="clearfix"></div>
-
-                        <div class="separator">
-                            <p class="change_link">New to site?
-                                <a href="{{ signup_url }}" class="to_register"> Create Account </a>
-                            </p>
-
-                            <div class="clearfix"></div>
-                            <br />
-
-                            <div>
-                                <h1><img class="img-fluid" src="{% static '/images/logo_nav.png' %}" alt="..." class="">
-                                </h1>
-                                <p>©2020 All Rights Reserved.</p>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
-
-
-
-        </div>
-    </div>
-</body>
-
-</html>
+{% endblock %}

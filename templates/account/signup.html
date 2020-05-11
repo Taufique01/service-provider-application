@@ -6,7 +6,7 @@
 {% block content %}
 <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a style="font-weight:bold" href="{{ login_url }}">sign in</a>.<br>***This is test account only. Contact <span>admin@fivethree.pro</span> for licensing requests.{% endblocktrans %}</p>
+<p>{% blocktrans %}Already have an account? Then please <a style="font-weight:bold" href="{{ login_url }}">sign in</a>{% endblocktrans %}</p>
 
 <form id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}

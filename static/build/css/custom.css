@@ -2109,7 +2109,7 @@ ul.msg_list li a .message {
 .dropdown-menu > li > a {
   color: #5A738E; }
 
-.navbar-nav .open .dropdown-menu {
+.navbar-navc .open .dropdown-menu {
   position: absolute;
   background: #fff;
   margin-top: 0;

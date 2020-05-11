@@ -291,6 +291,8 @@ $(document).ready(function (event) {
               error: function (request, status, error) {
                  $('.fa-spin-zlw').css("display","none");
                  $('.fa-close-zlw').css("display","inline");
+                 if(request.status==403)
+                    alert("For access to Zillow , contact site admin.\r\nAdmin email: admin@fivethree.pro");
                  
                 
             }
@@ -315,7 +317,10 @@ $(document).ready(function (event) {
             error: function (request, status, error) {
                  $('.fa-spin-ds').css("display","none");
                  $('.fa-close-ds').css("display","inline");
-                 alert("Please, Enter Valid Zip to Get Weather Reports.");
+                 if(request.status==403)
+                    alert("For access to Darksy, contact site admin.\r\nAdmin email: admin@fivethree.pro");
+                 else
+                    alert("Please, Enter Valid Zip to Get Weather Reports.");
                 
             }
         });

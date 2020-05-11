@@ -1,0 +1,16 @@
+.works-div{
+padding: 1px 1px 1px 1px;
+
+
+}
+
+.works-img{
+
+padding: 0px 0px 0px 0px;
+
+}
+.works-img:hover{
+
+opacity:.5;
+
+}

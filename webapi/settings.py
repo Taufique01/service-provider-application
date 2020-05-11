@@ -26,7 +26,7 @@ BASE_URL='http://192.243.100.74'
 SECRET_KEY = ')=m63ldv543c1q!d7e1mlt)x8a_o1nu*f#x-f+ny#8k(xk7s$q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','192.243.100.74','www.fivethree.pro','fivethree.pro']
 
@@ -40,21 +40,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'zillowAPI',
-    'search',
-    'message',
+########userdash#####
+    'userdash',
 #####django allauth###########
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-####calculator##########
-    'phone_field',
-    'rules',
-    'rest_framework_rules',
+####desugn####
     'bootstrapform',
-    
+    'crispy_forms',
+#####referal pinax###
+    'pinax.referrals',
+###Tyny Mice###
+    'tinymce',
+
+
 ]
+# CRISPY FORMS
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,6 +67,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+####pinax referal middle ware########
+    'pinax.referrals.middleware.SessionJumpingMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -87,7 +94,7 @@ TEMPLATES = [
 
             ],
             'libraries':{
-                      'calculator': 'search.templatetags.calculator',
+                      #'calculator': 'search.templatetags.calculator',
 
             },
         },
@@ -160,7 +167,7 @@ MEDIA_URL = '/media/'
 
 ####################Allauth registration#########
 SITE_ID = 1
-ACCOUNT_ADAPTER = 'search.account_adapter.NoNewUsersAccountAdapter'
+#ACCOUNT_ADAPTER = 'userdash.account.NoNewUsersAccountAdapter'
 
 
 LOGIN_REDIRECT_URL='/'
@@ -196,23 +203,31 @@ ACCOUNT_FORMS = {
 ###https://l.facebook.com/l.php?u=https%3A%2F%2Fmyaccount.google.com%2Flesssecureapps%3Fpli%3D1%26fbclid%3DIwAR2CL_EvS0257JaBsqcIGK47_5EHxSaw1ZQMk2h9-R3laFTvsA8j9LiUNOw&h=AT3bkopboKv9FC-NRSloYitPDjXJuutczWQYT8kAt6GnU9F4CT9k35W_T75UX-DW0neaCl0YuO36C38uvfX492HiRRNDrJCcpSADz4c57njDKJSNRoW4O0Nq0l7QaQ
 ####
 # Email backend settings for Django
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'# 'django.core.mail.backends.smtp.EmailBackend' # 
 EMAIL_HOST = 'smtp.zoho.eu'
 ##put yours email
-EMAIL_HOST_USER = 'admin@fivethree.pro'
+EMAIL_HOST_USER = ''
 ##put your password
-EMAIL_HOST_PASSWORD = 'TevvyTTgyvf4'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL='admin@fivethree.pro'
+DEFAULT_FROM_EMAIL=''
 
 
 
+##################################
+###django SUMMER NOTE #############
 
+TINYMCE_DEFAULT_CONFIG = {
 
-
-
-
-
+    'plugins': "table,paste,searchreplace,lists,advlist,link,textcolor",
+    #'menubar': True,
+    #'toolbar': 'bullist, numlist',
+  
+    'advlist_bullet_styles': 'square',
+    'advlist_number_styles': 'lower-alpha,lower-roman,upper-alpha,upper-roman',
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
 

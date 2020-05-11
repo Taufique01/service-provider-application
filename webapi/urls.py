@@ -23,9 +23,11 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('search.urls')),
+    path('', include('userdash.urls')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^accounts/', include('message.urls')),
+    url(r"^referrals/", include("pinax.referrals.urls", namespace="pinax_referrals")),
+    url(r'^tinymce/', include('tinymce.urls')),
+
 
 
 ]
