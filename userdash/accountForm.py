@@ -1,6 +1,7 @@
 from allauth.account.forms import SignupForm 
 from django import forms
 from .models import Referral
+
 class CustomSignupForm(SignupForm):
     first_name = forms.CharField(max_length=30, label='First name')
     last_name = forms.CharField(max_length=30, label='Last name')

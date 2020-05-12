@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ##local development
 #BASE_URL='http://127.0.0.1:8000'
 ###staging
-BASE_URL='http://192.243.100.74'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -28,7 +28,7 @@ SECRET_KEY = ')=m63ldv543c1q!d7e1mlt)x8a_o1nu*f#x-f+ny#8k(xk7s$q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','192.243.100.74','www.fivethree.pro','fivethree.pro']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','104.168.170.173','www.novonil.com','novonil.com']
 
 
 # Application definition
@@ -193,7 +193,7 @@ ACCOUNT_USERNAME_REQUIRED=True
 
 
 ACCOUNT_FORMS = { 
-'signup': 'search.accountForm.CustomSignupForm', 
+'signup': 'userdash.accountForm.CustomSignupForm', 
 } 
 
 
@@ -203,16 +203,16 @@ ACCOUNT_FORMS = {
 ###https://l.facebook.com/l.php?u=https%3A%2F%2Fmyaccount.google.com%2Flesssecureapps%3Fpli%3D1%26fbclid%3DIwAR2CL_EvS0257JaBsqcIGK47_5EHxSaw1ZQMk2h9-R3laFTvsA8j9LiUNOw&h=AT3bkopboKv9FC-NRSloYitPDjXJuutczWQYT8kAt6GnU9F4CT9k35W_T75UX-DW0neaCl0YuO36C38uvfX492HiRRNDrJCcpSADz4c57njDKJSNRoW4O0Nq0l7QaQ
 ####
 # Email backend settings for Django
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'# 'django.core.mail.backends.smtp.EmailBackend' # 
-EMAIL_HOST = 'smtp.zoho.eu'
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend' #  'django.core.mail.backends.console.EmailBackend'# 
+EMAIL_HOST = 'mail.privateemail.com'
 ##put yours email
-EMAIL_HOST_USER = ''
+EMAIL_HOST_USER = 'admin@novonil.com'
 ##put your password
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL=''
+DEFAULT_FROM_EMAIL='admin@novonil.com'
 
 
 
