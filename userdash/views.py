@@ -32,11 +32,12 @@ class UserDashTemplate(APIView):
       
 
       def get(self, request, *args, **kwargs):
+          messageForm=MessageForm()
           if not request.user.is_authenticated:
-             return Response()
+             return Response({'form':messageForm,})
           estimates=Estimate.objects.filter(user=request.user)
           orders=Order.objects.filter(user=request.user).exclude(status='completed')
-          messageForm=MessageForm()
+
           return Response({'estimates':estimates,'orders':orders,'form':messageForm,})
       def post(self, request, *args, **kwargs):
           
