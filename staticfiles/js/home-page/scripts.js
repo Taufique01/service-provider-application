@@ -130,163 +130,18 @@ jQuery(function ($) {
 	 * Use this as your ID below instead!
 	 */
 
-    (function () {
-        var twitterConfig = {
-            id: "567185781790228482", //put your Widget ID here
-            domId: "",
-            maxTweets: 3,
-            enableLinks: true,
-            showUser: true,
-            showTime: true,
-            showInteraction: false,
-            customCallback: handleTweets
-        };
-        twitterFetcher.fetch(twitterConfig);
-
-        function handleTweets(tweets) {
-            var x = tweets.length;
-            var n = 0;
-            var html = "";
-            while (n < x) {
-                html += '<div class="owl-item">' + tweets[n] +
-                    "</div>";
-                n++
-            }
-            $(".twitter").html(html);
-            $(".twitter_retweet_icon").html(
-                '<i class="fa fa-retweet"></i>');
-            $(".twitter_reply_icon").html(
-                '<i class="fa fa-reply"></i>');
-            $(".twitter_fav_icon").html(
-                '<i class="fa fa-star"></i>');
-            $(".twitter").owlCarousel({
-                singleItem: true,
-                navigation: false,
-                pagination: false,
-                slideSpeed: 200,
-                paginationSpeed: 800,
-                autoPlay: 8000,
-                navigationText: [
-                    '<i class="fa fa-angle-left"></i>',
-                    '<i class="fa fa-angle-right"></i>'
-                ]
-            })
-        }
-    }());
-
-    
-    // Twitter Feed on Blog Page Widget
-    (function () {
-        var twitterConfig2 = {
-            id: "567185781790228482", //put your Widget ID here
-            domId: "twitterWidget",
-            maxTweets: 3,
-            enableLinks: true,
-            showUser: false,
-            showTime: false,
-            showInteraction: false,
-            customCallback: handleTweets
-        };
-        twitterFetcher.fetch(twitterConfig2);
-
-        function handleTweets(tweets) {
-            var x = tweets.length;
-            var n = 0;
-            var html = "";
-            while (n < x) {
-                html += '<div class="owl-item">' + tweets[n] +
-                    "</div>";
-                n++
-            }
-            $(".twitter-widget").html(html);
-            $(".twitter_retweet_icon").html(
-                '<i class="fa fa-retweet"></i>');
-            $(".twitter_reply_icon").html(
-                '<i class="fa fa-reply"></i>');
-            $(".twitter_fav_icon").html(
-                '<i class="fa fa-star"></i>');
-            $(".twitter-widget").owlCarousel({
-                singleItem: true,
-                navigation: false,
-                pagination: false,
-                slideSpeed: 200,
-                paginationSpeed: 800,
-                autoPlay: 6000,
-                navigationText: [
-                    '<i class="fa fa-angle-left"></i>',
-                    '<i class="fa fa-angle-right"></i>'
-                ]
-            })
-        }
-    }());
-
+   
 
 
     // -------------------------------------------------------------
     // Shuffle
     // -------------------------------------------------------------
 
-    (function () {
-    
-        /* initialize shuffle plugin */
-        var $grid = $('#grid');
-
-        $grid.shuffle({
-            itemSelector: '.portfolio-item' // the selector for the items in the grid
-        });
-
-        /* reshuffle when user clicks a filter item */
-        $('#filter a').click(function (e) {
-            e.preventDefault();
-
-            // set active class
-            $('#filter a').removeClass('active');
-            $(this).addClass('active');
-
-            // get group name from clicked item
-            var groupName = $(this).attr('data-group');
-
-            // reshuffle grid
-            $grid.shuffle('shuffle', groupName );
-        });
-    
-    }());
-
 
 
     //-------------------------------------------------------
     // counter
     //-------------------------------------------------------
-    $('.counter-section').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
-        if (visible) {
-            $(this).find('.timer').each(function () {
-                var $this = $(this);
-                $({ Counter: 0 }).animate({ Counter: $this.text() }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function () {
-                        $this.text(Math.ceil(this.Counter));
-                    }
-                });
-            });
-            $(this).unbind('inview');
-        }
-    });
-
-
-
-    $('#photoStream').jflickrfeed({
-        limit: 8,
-        qstrings: {
-            id: '52617155@N08'
-        },
-        itemTemplate: '<li>'+
-                        '<a href="{{image}}" title="{{title}}">' +
-                            '<img src="{{image_s}}" alt="{{title}}" />' +
-                        '</a>' +
-                      '</li>'
-    });
-
 
 
 
@@ -365,35 +220,7 @@ jQuery(function ($) {
 	//CONTACT FORM
 	// ------------------------------------------------------------------
 
-	(function () {
-
-        $('#contactForm').on('submit',function(e){
-
-            e.preventDefault();
-
-            var $action = $(this).prop('action');
-            var $data = $(this).serialize();
-            var $this = $(this);
-
-            $this.prevAll('.alert').remove();
-
-            $.post( $action, $data, function( data ) {
-
-                if( data.response=='error' ){
-
-                    $this.before( '<div class="alert alert-danger">'+data.message+'</div>' );
-                }
-
-                if( data.response=='success' ){
-
-                    $this.before( '<div class="alert alert-success">'+data.message+'</div>' );
-                    $this.find('input, textarea').val('');
-                }
-
-            }, "json");
-
-        });
-    }());
+	
 
 
 
@@ -403,56 +230,9 @@ jQuery(function ($) {
 
 	jQuery(document).ready(function($) {
 
-	    "use strict";
-	    //set your google maps parameters
-	    var $latitude = 48.869319, //If you unable to find latitude and longitude of your address. Please visit http://www.latlong.net/convert-address-to-lat-long.html you can easily generate.
-	        $longitude = 2.354261,
-	        $map_zoom = 16; /* ZOOM SETTING */
-
-	    //google map custom marker icon 
-	    var $marker_url = 'img/map-marker.png';
-
-	    //we define here the style of the map
-	    var style = [{
-	        "stylers": [{
-	            "hue": "#6145d6"
-	        }, {
-	            "saturation": 100
-	        }, {
-	            "gamma": 2.15
-	        }, {
-	            "lightness": 12
-	        }]
-	    }];
-
-	    //set google map options
-	    var map_options = {
-	        center: new google.maps.LatLng($latitude, $longitude),
-	        zoom: $map_zoom,
-	        panControl: true,
-	        zoomControl: true,
-	        mapTypeControl: false,
-	        streetViewControl: true,
-	        mapTypeId: google.maps.MapTypeId.ROADMAP,
-	        scrollwheel: false,
-	        styles: style,
-	    }
-	    //inizialize the map
-	    var map = new google.maps.Map(document.getElementById('googleMap'), map_options);
-	    //add a custom marker to the map                
-	    var marker = new google.maps.Marker({
-	        position: new google.maps.LatLng($latitude, $longitude),
-	        map: map,
-	        visible: true,
-	        icon: $marker_url,
-	    });
 
 
-	    $('#cssMapModal').on('shown.bs.modal', function(){
 
-	     google.maps.event.trigger(map, 'resize');
-	     map.setCenter(new google.maps.LatLng($latitude, $longitude));
-	  });
 
 	   
 	});

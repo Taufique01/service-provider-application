@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
 from datetime import datetime
-from .models import Estimate, Order
+from .models import Estimate, Order,Sample
 from django.views.generic import ListView, DetailView, View,CreateView,UpdateView,DeleteView
 from django.contrib.admin.widgets import AdminDateWidget
 from django.core.exceptions import PermissionDenied
@@ -153,6 +153,19 @@ class ReferralView(LoginRequiredMixin,APIView):
              raise PermissionDenied()
 
           return Response({'estimates':estimates,'orders':orders,'profile':profile})
+
+
+
+class SampleView(APIView):
+     
+      renderer_classes = [TemplateHTMLRenderer]
+      template_name = 'sample.html'
+      
+
+      def get(self, request, *args, **kwargs):
+          samples=Sample.objects.all()
+          print(samples)
+          return Response({'samples':samples})
 
 
 

@@ -91,13 +91,16 @@
                                 {% endblock homelink %}
 
                                 <li class="nav child_menu">
-                                    <a href="{% url 'add-estimate' %}"><i class="fa fa-plus"></i>New Estimates</a>
+                                    <a href="{% url 'add-estimate' %}"><i class="fa fa-coffee"></i>Discuss a Project</a>
+                                </li>
+                               <li class="nav child_menu">
+                                    <a href="{% url 'sample' %}"><i class="fa fa-list"></i>Samples and Prices</a>
                                 </li>
 
 
                                 {% if user.is_authenticated %}
 
-                                <li><a><i class="fa fa-calculator"></i> Estimates <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-comments"></i> Discussions <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
 
                                         {% for estimate in estimates %}
@@ -229,7 +232,7 @@
         <footer>
             <div class="pull-right">
 
-                Copyright 2020 all rights reserved. Email: admin@nobonil.com
+                Copyright 2020 all rights reserved. Email: info@nobonil.com
             </div>
 
 
@@ -245,14 +248,12 @@
     <div id="username" style="display: none">{{request.user.get_full_name}}</div>
 
 
-
+    
     <!-- jQuery -->
-    <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script>
+   <script src="{% static '/vendors/jquery/dist/jquery.min.js' %}"></script> 
     <!-- Bootstrap -->
-    <script src="{% static '/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="{% static '/build/js/custom.min.js' %}"></script>
+   <script src="{% static '/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script> 
+     
 
     {% block js %}
 
@@ -262,6 +263,9 @@
     {% endblock js %}
 
 
+
+    <!-- Custom Theme Scripts -->
+    <script src="{% static '/build/js/custom.min.js' %}"></script>
 
 
 </body>

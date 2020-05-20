@@ -10,6 +10,7 @@ urlpatterns = [
     path('estimate/<int:id>/details/', views.EstimateDetailsView.as_view(), name='estimate-details'),
     path('order/<int:id>/details/', views.OrderDetailsView.as_view(), name='order-details'),
     path('user/referral/', views.ReferralView.as_view(), name='user-referral'),
+    path('sample/',views.SampleView.as_view(),name='sample'),
 
 ]
 

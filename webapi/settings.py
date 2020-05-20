@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ##local development
@@ -206,13 +207,13 @@ ACCOUNT_FORMS = {
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend' #  'django.core.mail.backends.console.EmailBackend'# 
 EMAIL_HOST = 'mail.privateemail.com'
 ##put yours email
-EMAIL_HOST_USER = 'admin@novonil.com'
+EMAIL_HOST_USER = 'info@novonil.com'
 ##put your password
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'WMmTFvxL93YN'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL='admin@novonil.com'
+DEFAULT_FROM_EMAIL='info@novonil.com'
 
 
 

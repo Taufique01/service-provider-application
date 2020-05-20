@@ -210,3 +210,32 @@ def handle_user_signed_up(sender,request, user,  **kwargs):
 
 
 
+
+
+
+
+class Sample(models.Model): 
+    tag  = models.CharField(max_length=300)
+    price = models.FloatField()
+    upload = models.ImageField(upload_to ='uploads/% Y/% m/% d/') 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
