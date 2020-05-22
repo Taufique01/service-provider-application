@@ -205,7 +205,7 @@ ACCOUNT_FORMS = {
 ####
 # Email backend settings for Django
 EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend' #  'django.core.mail.backends.console.EmailBackend'# 
-EMAIL_HOST = 'mail.privateemail.com'
+EMAIL_HOST = 'smtp.zoho.com'
 ##put yours email
 EMAIL_HOST_USER = 'info@novonil.com'
 ##put your password
@@ -213,7 +213,7 @@ EMAIL_HOST_PASSWORD = 'WMmTFvxL93YN'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL='info@novonil.com'
+DEFAULT_FROM_EMAIL='NOVONIL<info@novonil.com>'
 
 
 

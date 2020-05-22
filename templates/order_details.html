@@ -4,6 +4,7 @@
 
 {% block links %}
 
+
 <!-- Web Fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,900,700,500,300' rel='stylesheet' type='text/css'>
 <!-- Flaticon CSS -->
@@ -31,6 +32,7 @@
 
 
 
+
 {% endblock links %}
 
 
@@ -54,8 +56,8 @@
         {{ order.description|safe }}
     </div>
 
-    <h2>Asking Price: {{ order.price }}</h2>
-    <h2>Estimated Price: {{order.estimated_price}}</h2>
+    <h2>Asking Price: &#36;{{ order.price }}</h2>
+    <h2>Estimated Price: &#36;{{order.estimated_price}}</h2>
     <h2>Starting Date:{{ order.starting_date }}</h2>
     <h2>Delivery Date:{{ order.delivery_date }}</h2>
     <h2>We will contact you on {{order.contact_method}}, address <b>{{order.contact_address}}</b>.</h2>
@@ -89,8 +91,7 @@
 <script src="{% static 'js/home-page/wow.min.js' %}"></script>
 <!-- smoothscroll -->
 <script src="{% static 'js/home-page/smoothscroll.js' %}"></script>
-<!-- twitterFetcher_min -->
-<script src="{% static 'js/home-page/twitterFetcher_min.js' %}"></script>
+
 <!-- owl.carousel -->
 <script src="{% static 'js/home-page/owl.carousel.min.js' %}"></script>
 <!-- Offcanvas Menu -->
@@ -104,13 +105,14 @@
 <!-- Scrolling Nav JavaScript -->
 <script src="{% static 'js/home-page/jquery.easing.min.js' %}"></script>
 <!-- flickerPhoto -->
-<script src="{% static 'js/home-page/flickerPhoto.min.js' %}"></script>
+
 <!-- Shuffle.min js -->
-<script src="{% static 'js/home-page/jquery.shuffle.min.js' %}"></script>
-<!-- GOGLE MAP -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+
 <!-- Custom Script -->
 <script src="{% static 'js/home-page/scripts.js' %}"></script>
+
+
 
 
 {% endblock js %}

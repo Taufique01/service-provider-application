@@ -33,6 +33,8 @@
 
 
 
+
+
 {% endblock links %}
 
 
@@ -50,10 +52,10 @@
 </div>
 
 <h2>No. of registered users from your referral: {{ profile.referral_count }}</h2>
-<h2>Total orders the users have untill now: {{ profile.referral_orders_amount }} </h2>
+<h2>Total orders the users have untill now: &#36;{{ profile.referral_orders_amount }} </h2>
 
-<h2>Your total earning: {{ profile.referral_earning }}</h2>
-<h2>You withdrawn: {{ profile.withdrawn }}</h2>
+<h2>Your total earning: &#36;{{ profile.referral_earning }}</h2>
+<h2>You withdrawn: &#36;{{ profile.withdrawn }}</h2>
 <div>You can use your payal balance to withdraw the earning. To withdraw your balance contact us at <span> <b>info@nobonil.com</b></span><br>We will send you details about how to withdraw. </div>
 
 </div>
@@ -84,8 +86,7 @@
 <script src="{% static 'js/home-page/wow.min.js' %}"></script>
 <!-- smoothscroll -->
 <script src="{% static 'js/home-page/smoothscroll.js' %}"></script>
-<!-- twitterFetcher_min -->
-<script src="{% static 'js/home-page/twitterFetcher_min.js' %}"></script>
+
 <!-- owl.carousel -->
 <script src="{% static 'js/home-page/owl.carousel.min.js' %}"></script>
 <!-- Offcanvas Menu -->
@@ -99,13 +100,14 @@
 <!-- Scrolling Nav JavaScript -->
 <script src="{% static 'js/home-page/jquery.easing.min.js' %}"></script>
 <!-- flickerPhoto -->
-<script src="{% static 'js/home-page/flickerPhoto.min.js' %}"></script>
+
 <!-- Shuffle.min js -->
-<script src="{% static 'js/home-page/jquery.shuffle.min.js' %}"></script>
-<!-- GOGLE MAP -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+
 <!-- Custom Script -->
 <script src="{% static 'js/home-page/scripts.js' %}"></script>
+
+
 
 
 {% endblock js %}

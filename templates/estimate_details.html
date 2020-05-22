@@ -4,6 +4,7 @@
 {% load static %}
 {% block links %}
 
+
 <!-- Web Fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,900,700,500,300' rel='stylesheet' type='text/css'>
 <!-- Flaticon CSS -->
@@ -31,6 +32,7 @@
 
 
 
+
 {% endblock links %}
 
 {% block content %}
@@ -50,8 +52,8 @@
        {{ estimate.description|safe }}
     </div>
 
-    <h2>Asking Price: {{ estimate.asking_price }}</h2>
-    <h2>Estimated Price: {{estimate.estimated_price}}</h2>
+    <h2>Asking Price: &#36;{{ estimate.asking_price }}</h2>
+    <h2>Estimated Price: &#36;{{estimate.estimated_price}}</h2>
     <h2>Asking Date:{{ estimate.asking_time }} days</h2>
     <h2>Required Date:{{ estimate.estimated_time }} days</h2>
     <h2>We will contact you on {{estimate.contact_method}}, address <b>{{estimate.contact_address}}</b>.</h2>
@@ -87,8 +89,7 @@
 <script src="{% static 'js/home-page/wow.min.js' %}"></script>
 <!-- smoothscroll -->
 <script src="{% static 'js/home-page/smoothscroll.js' %}"></script>
-<!-- twitterFetcher_min -->
-<script src="{% static 'js/home-page/twitterFetcher_min.js' %}"></script>
+
 <!-- owl.carousel -->
 <script src="{% static 'js/home-page/owl.carousel.min.js' %}"></script>
 <!-- Offcanvas Menu -->
@@ -102,11 +103,10 @@
 <!-- Scrolling Nav JavaScript -->
 <script src="{% static 'js/home-page/jquery.easing.min.js' %}"></script>
 <!-- flickerPhoto -->
-<script src="{% static 'js/home-page/flickerPhoto.min.js' %}"></script>
+
 <!-- Shuffle.min js -->
-<script src="{% static 'js/home-page/jquery.shuffle.min.js' %}"></script>
-<!-- GOGLE MAP -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+
 <!-- Custom Script -->
 <script src="{% static 'js/home-page/scripts.js' %}"></script>
 

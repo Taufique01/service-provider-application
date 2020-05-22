@@ -12,7 +12,7 @@ develop:
 serve:venv
 	env/bin/gunicorn -p app.pid --bind 0.0.0.0:8001 webapi.wsgi --daemon #first upload a working test app to start the server
 
-deploy:develop
-	env/bin/python manage.py collectstatic  --noinput --clear
-	
+deploy:
+	../env/bin/python manage.py collectstatic  --noinput --clear
+	supervisorctl restart hello
 	echo "Deploy successful"
