@@ -209,7 +209,7 @@ EMAIL_HOST = 'smtp.zoho.com'
 ##put yours email
 EMAIL_HOST_USER = 'info@novonil.com'
 ##put your password
-EMAIL_HOST_PASSWORD = 'WMmTFvxL93YN'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
